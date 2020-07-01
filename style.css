@@ -1,0 +1,243 @@
+body {
+	background-color:	var(--offBlack);
+	font-family:		courier;
+	font-size:			36;
+	/*min-width:			400px;
+	max-width:			1000px;*/
+	margin: auto;
+	min-width: 725px;
+	max-width: 1000px;
+}
+
+:root {
+	--offWhite:		rgb(250, 250, 250);
+	--offBlack:		#0e0e0e;
+	--buttonSize:	150px;
+	--sliderHeight:	100px;
+	--cornerRadius:	35px;
+	--fontSize:		40px;
+	--sidePadd:		25px;
+	--vertMargin:	25px;
+	--font:			roboto;
+}
+
+/* Mobile Size */
+@media screen and (max-width: 500px) {
+	/* if screen and size is less than 500 then... */
+	body {
+		background-color: var(--offBlack);
+	}
+	.buttonColor {
+		width: 10px;
+	}
+}
+@media screen and (max-width: 500px) {
+	.slider {
+		height: 50px;
+	}
+}
+/* Custom Font */
+@font-face {
+	font-family: roboto;
+	src:	url("/assets/Roboto-Thin.ttf") format("woff2"),
+			url("/assets/Roboto-Thin.ttf") format("woff");
+}
+
+/* --- DIVS --- */
+.gap {
+	/* used for spacing in flex boxes */
+	width: var(--sidePadd);
+}
+.animationButtonContainer {
+	margin-top:		5%;
+	margin-bottom:	var(--vertMargin);
+	padding-left:	var(--sidePadd);
+	padding-right:	var(--sidePadd);
+	
+	display:			flex;
+	justify-content:	space-between;
+}
+.slideContainer {
+	margin-bottom:	var(--vertMargin);
+	padding-left:	var(--sidePadd);
+	padding-right:	var(--sidePadd);
+}
+.offButton {
+	margin-bottom:	var(--vertMargin);
+	padding-left:	var(--sidePadd);
+	padding-right:	var(--sidePadd);
+}
+.colorGrid {
+	width:		100%;
+	display:	flex;
+	flex-wrap:	wrap;
+}
+.colorGridRow {
+	padding-bottom:		var(--vertMargin);
+	padding-left:		var(--sidePadd);
+	padding-right:		var(--sidePadd);
+	width:				100%;
+	display:			flex;
+	justify-content:	space-between;
+}
+/* --- END DIVS --- */
+
+/* --- BUTTONS --- */
+button {
+	border:				none;
+	border-radius:		var(--cornerRadius);
+	color:				black;					/* Font color */
+	text-align:			center;
+	text-decoration:	none;
+	display:			inline-block;
+	font-size:			var(--fontSize);
+	font-family:		var(--font);
+	height:				var(--buttonSize);
+	text-transform:		uppercase;
+}
+.buttonAnimation {
+	height: 100px;
+	flex-grow: 1;
+}
+.buttonColor {
+	width:			var(--buttonSize);
+	padding:		0px 0px;
+	border-style:	solid;
+	border-color:	var(--offWhite);
+	border-width:	0px;
+}
+.buttonRainbow {
+	background:
+		linear-gradient(
+			to bottom,
+			var(--offWhite),
+			var(--offWhite) 90%,
+			rgba(250, 250, 250, 0.0) 90%
+		),
+		linear-gradient(
+			to right,
+			red,
+			orange,
+			yellow,
+			green,
+			cyan,
+			blue,
+			violet
+		);
+}
+.buttonPride {
+	background:
+		linear-gradient(
+			to bottom,
+			var(--offWhite),
+			var(--offWhite) 90%,
+			rgba(250, 250, 250, 0.0) 90%
+		),
+		linear-gradient(
+			to right,
+			rgb(229, 0, 0) 16.67%,
+			rgb(255, 141, 0) 16.67%,
+			rgb(255, 141, 0) 33.34%,
+			rgb(255, 238, 0) 33.34%,
+			rgb(255, 238, 0) 50%,
+			rgb(0, 129, 33) 50%,
+			rgb(0, 129, 33) 66.67%,
+			rgb(0, 76, 255) 66.67%,
+			rgb(0, 76, 255) 83.34%,
+			rgb(118, 1, 136) 83.34%
+		);
+}
+/* --- END BUTTONS --- */
+
+/* --- SLIDER --- */
+.slider {
+	-webkit-appearance:	none;		/* Override default CSS styles */
+	appearance:			none;
+	border-radius:		var(--cornerRadius);
+	width:				100%;					/* Full-width */
+	height:				var(--sliderHeight);	/* Specified height */
+	background:			#d3d3d3;				/* Grey background */
+	outline:			none;					/* Remove outline */
+	margin-left:		0px;					/* This is necessary */
+	margin-top:			0px;					/* This is necessary */
+	margin-bottom:		0px;					/* This may not do anything */
+	margin-right:		0px;					/* This may not do anything */
+	/*opacity: 0.7;				/* Set transparency (for mouse-over effects on hover) */
+	/*-webkit-transition: .2s;	/* 0.2 seconds transition on hover */
+	/*transition: opacity .2s;*/
+}
+.sliderSV {
+	-webkit-appearance:	none;		/* Override default CSS styles */
+	appearance:			none;
+	border-radius:		var(--cornerRadius);
+	width:				100%;					/* Full-width */
+	height:				var(--sliderHeight);	/* Specified height */
+	background:			#d3d3d3;				/* Grey background */
+	outline:			none;					/* Remove outline */
+	margin-left:		0px;					/* This is necessary */
+	margin-top:			0px;					/* This is necessary */
+	margin-bottom:		0px;					/* This may not do anything */
+	margin-right:		0px;					/* This may not do anything */
+	/*opacity: 0.7;				/* Set transparency (for mouse-over effects on hover) */
+	/*-webkit-transition: .2s;	/* 0.2 seconds transition on hover */
+	/*transition: opacity .2s;*/
+}
+.sliderH {
+	/* Generate rainbow background */
+	background: linear-gradient(
+		to right,
+		red,
+		yellow,
+		green,
+		cyan,
+		blue,
+		violet,
+		red
+	);
+}
+.sliderS {
+	background: linear-gradient(
+		to right,
+		white,
+		rgb(0, 255, 255)
+	);
+	height: calc(var(--sliderHeight)/2);
+}
+.sliderV {
+	background: linear-gradient(
+		to right,
+		black,
+		rgb(0, 255, 255)
+	);
+	height: calc(var(--sliderHeight)/2);
+}
+.slider:hover {
+	/*opacity: 1; /* Fully shown on mouse-over */
+}
+.sliderSV::-webkit-slider-thumb {
+	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+	-webkit-appearance: none;					/* Override default look */
+	appearance:	none;
+	width:		20px;							/* Set a specific slider handle width */
+	height:		calc(var(--sliderHeight)/2);	/* Slider handle height */
+	background:	var(--offBlack);				/* Green background */
+	opacity:	0.5;
+	cursor:		pointer;						/* Cursor on hover */
+}
+.slider::-webkit-slider-thumb {
+	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+	-webkit-appearance: none;			/* Override default look */
+	appearance:	none;
+	width:		20px;					/* Set a specific slider handle width */
+	height:		var(--sliderHeight);	/* Slider handle height */
+	background:	var(--offBlack);		/* Green background */
+	opacity:	0.5;
+	cursor:		pointer;				/* Cursor on hover */
+}
+.slider::-moz-range-thumb {
+	width: 25px;				/* Set a specific slider handle width */
+	height: 25px;				/* Slider handle height */
+	background: #4CAF50;		/* Green background */
+	cursor: pointer;			/* Cursor on hover */
+}
+/* --- END SLIDER --- */

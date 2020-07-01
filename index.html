@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	
+	<!-- Color Picker:	https://github.com/Simonwep/pickr -->
+	
+	<!-- Set scaling for device? -->
+	<meta name="viewport" content="width=device-width, initial-scale-1.0">
+	
+	<head>
+		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="js/java.js?1"></script>
+		<title>Index page</title>
+	</head>
+	
+	<body>
+		<section class="animationButtonContainer">
+			<button type="button" class="buttonAnimation buttonRainbow" onclick="javascript:animateHTML('rainbow')">Rainbow</button>
+			<div style="width:25px;"></div>
+			<button type="button" class="buttonAnimation buttonPride" onclick="javascript:animateHTML('pride')">Pride</button>
+		</section>
+		<div class="slideContainer">
+			<input type="range" min="0" max="359" class="slider sliderH" id="hSlide">
+			<input type="range" min="0" max="100" class="sliderSV sliderS" id="sSlide" value=100>
+			<input type="range" min="0" max="100" class="sliderSV sliderV" id="vSlide" value=100>
+		</div>
+		<div class="offButton">
+			<button type="button" class="buttonColor" style="
+				background-color:	black;
+				color:				white;
+				width:				100%;
+				font-size:			70px;
+				height:				100px;
+			" onclick="javascript:static(0, 0, 0)">Off</button>
+		</div>
+		<div class="colorGrid">
+			<!-- RED -->
+			<div class="colorGridRow">
+				<button type="button" class="buttonColor" style="background-color: rgb(255,   0,   0);" onclick="javascript:static(255,   0,   0)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255,  63,  63);" onclick="javascript:static(255,  63,  63)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 127, 127);" onclick="javascript:static(255, 127, 127)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 191, 191);" onclick="javascript:static(255, 191, 191)"></button>
+			</div>
+			<!-- ORANGE H:34 -->
+			<div class="colorGridRow">
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 144,   0);" onclick="javascript:static(255, 144,   0)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 172,  64);" onclick="javascript:static(255, 172,  64)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 200, 128);" onclick="javascript:static(255, 200, 128)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 227, 191);" onclick="javascript:static(255, 227, 191)"></button>
+			</div>
+			<!-- YELLOW H:55-->
+			<div class="colorGridRow">
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 233,   0);" onclick="javascript:static(255, 233,   0)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 239,  64);" onclick="javascript:static(255, 239,  64)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 244, 128);" onclick="javascript:static(255, 244, 128)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 250, 191);" onclick="javascript:static(255, 250, 191)"></button>
+			</div>
+			<!-- GREEN -->
+			<div class="colorGridRow">
+				<button type="button" class="buttonColor" style="background-color: rgb(  0, 255,   0);" onclick="javascript:static(  0, 255,   0)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb( 63, 255,  63);" onclick="javascript:static( 63, 255,  63)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(127, 255, 127);" onclick="javascript:static(127, 255, 127)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(191, 255, 191);" onclick="javascript:static(191, 255, 191)"></button>
+			</div>
+			<!-- CYAN H:184-->
+			<div class="colorGridRow">
+				<button type="button" class="buttonColor" style="background-color: rgb(  0, 238, 255);" onclick="javascript:static(  0, 238, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb( 64, 242, 255);" onclick="javascript:static( 64, 242, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(128, 247, 255);" onclick="javascript:static(128, 247, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(191, 251, 255);" onclick="javascript:static(191, 251, 255)"></button>
+			</div>
+			<!-- BLUE -->
+			<div class="colorGridRow">
+				<button type="button" class="buttonColor" style="background-color: rgb(  0,   0, 255);" onclick="javascript:static(  0,   0, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb( 63,  63, 255);" onclick="javascript:static( 63,  63, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(127, 127, 255);" onclick="javascript:static(127, 127, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(191, 191, 255);" onclick="javascript:static(191, 191, 255)"></button>
+			</div>
+			<!-- PURPLE H:279 -->
+			<div class="colorGridRow">
+				<button type="button" class="buttonColor" style="background-color: rgb(165,   0, 255);" onclick="javascript:static(165,   0, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(188,  64, 255);" onclick="javascript:static(188,  64, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(210, 128, 255);" onclick="javascript:static(210, 128, 255)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(233, 191, 255);" onclick="javascript:static(233, 191, 255)"></button>
+			</div>
+			<!-- PINK H:319 -->
+			<div class="colorGridRow">
+			<button type="button" class="buttonColor" style="background-color: rgb(255,   0, 175);" onclick="javascript:static(255,   0, 175)"></button><div class="gap"></div>
+			<button type="button" class="buttonColor" style="background-color: rgb(255,  64, 194);" onclick="javascript:static(255,  64, 194)"></button><div class="gap"></div>
+			<button type="button" class="buttonColor" style="background-color: rgb(255, 128, 215);" onclick="javascript:static(255, 128, 215)"></button><div class="gap"></div>
+			<button type="button" class="buttonColor" style="background-color: rgb(255, 191, 235);" onclick="javascript:static(255, 191, 235)"></button>
+			</div>
+		</div>
+		
+		<script>
+			
+			<!-- Forward JS calls -->
+			function animateHTML(mode) { animate(mode); }
+			
+			<!-- Handle HSV sliders -->
+			let hSlider	= document.getElementById("hSlide");
+			let sSlider	= document.getElementById("sSlide");
+			let vSlider	= document.getElementById("vSlide");
+			
+			hSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
+			sSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
+			vSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
+			
+		</script>
+		
+	</body>
+</html>
