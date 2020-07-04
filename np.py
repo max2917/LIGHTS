@@ -75,6 +75,14 @@ def pride(speed):
 			elif (i == 5):
 				with pixelLock: pixels[(i*int(stripSize))+j] = (117, 7, 135)
 
+def strobe():
+	print("STROBE")
+	while True:
+		if (animate == False): break
+		with pixelLock: pixels.fill((0, 0, 0))
+		time.sleep(0.1)
+		if (animate == False): break
+		with pixelLock: pixels.fill((255, 255, 255))
 
 def threader():
 	while True:
@@ -86,6 +94,9 @@ def threader():
 			q.task_done()
 		elif (params[0] == "pride"):
 			pride(int(params[1]))
+			q.task_done()
+		elif (params[0] == "strobe"):
+			strobe()
 			q.task_done()
 
 q = Queue()
@@ -131,6 +142,8 @@ while True:
 					elif (d[0] == "rainbow"):
 						print("previous button", d[0])
 						previousButton = d[0]
+						animate = False
+						time.sleep(0.01)
 						animate = True
 
 						t = threading.Thread(target = threader)
@@ -140,10 +153,23 @@ while True:
 						q.put(params)
 					elif (d[0] == "pride"):
 						previousButton = d[0]
+						animate = False
+						time.sleep(0.01)
 						animate = True
 
 						t = threading.Thread(target = threader)
 						t.daemon = True
 						t.start()
 						params = [d[0], d[1]] # Name and speed of animation
+						q.put(params)
+					elif (d[0] == "strobe"):
+						previousButton = d[0]
+						animate = False
+						time.sleep(0.01)
+						animate = True
+
+						t = threading.Thread(target = threader)
+						t.daemon = True
+						t.start()
+						params = [d[0]]
 						q.put(params)
