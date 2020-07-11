@@ -17,9 +17,9 @@ def rainbow(speed):
 
 	# HSV 0-359
 	for i in range(0, pixelCount):
-		print("H: ", ((i*360)/pixelCount))
-		rgb = colorsys.hsv_to_rgb((i*360)/pixelCount, 100, 100)
-		print("RGB: ", int(rgb[0]), " ", int(rgb[1]), " ", int(rgb[2]))
+		print("H: ", int(((i*360)/pixelCount)))
+		rgb = colorsys.hsv_to_rgb(int((i*360)/pixelCount), 100, 100)
+		print("RGB: ", rgb[0], " ", rgb[1], " ", rgb[2])
 		with pixelLock: pixels[i] = (int(rgb[0]), int(rgb[1]), int(rgb[2]))
 
 	#colors = ((228, 3, 3), (255, 140, 0), (255, 237, 0), (0, 255, 0), (0, 77, 255), (117, 7, 135), (138, 43, 226))
