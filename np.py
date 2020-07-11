@@ -13,7 +13,7 @@ animate = False
 
 pixelLock = threading.Lock()
 
-def rainbowChase(speed):
+def rainbowChase():
 	# Animate bar with rainbow
 	for i in range(1, pixelCount):
 		rgb = colorsys.hsv_to_rgb(i/pixelCount, 1, 1)
