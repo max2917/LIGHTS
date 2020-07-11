@@ -1,5 +1,3 @@
-var currentMode = document.getElementById("currentMode");
-
 // Send XMLHttpRequest to update light strip
 function request(param) {
 	var xhr = new XMLHttpRequest();
@@ -32,19 +30,22 @@ function static(r, g, b) {
 	sSlider.style.background = `linear-gradient(to right, white, rgb(${r}, ${g}, ${b}))`;
 	vSlider.style.background = `linear-gradient(to right, black, rgb(${r}, ${g}, ${b}))`;
     request("mode=static"+"&red="+r+"&green="+g+"&blue="+b);
-    currentMode.value = "static";
+    var currentMode = document.getElementById("currentMode");
+    if (currentMode) currentMode.value = "static";
 };
 
 // Set light strip to some animated mode
 function animate(mode) {
 	console.log("ANIMATE\t", mode);
     request("mode="+mode);
-    currentMode.value = mode;
+    var currentMode = document.getElementById("currentMode");
+    if (currentMode) currentMode.value = mode;
 };
 
 function animateWithSpeed(mode, speed) {
     request("mode="+mode+"&speed="+speed);
-    currentMode.value = mode;
+    var currentMode = document.getElementById("currentMode");
+    if (currentMode) currentMode.value = mode;
 }
 
 // Update light strip based on slider states
