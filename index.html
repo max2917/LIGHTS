@@ -23,11 +23,21 @@
 			<div style="width:25px;"></div>
 			<button type="button" class="buttonAnimation buttonPride" onclick="javascript:animateHTML('pride')">Pride</button>
 		</section>
-		<section class="sectionContainer"></section><div class="sectionLine"></div><div class="sectionTitle">Color Picker</div><div class="sectionLine"></div></section>
+		<section class="sectionContainer">
+			<div class="sectionLine"></div>
+			<div class="sectionTitle">Color Picker</div>
+			<div class="sectionLine"></div>
+		</section>
 		<div class="slideContainer">
 			<input type="range" min="0" max="359" class="slider sliderH" id="hSlide">
 			<input type="range" min="0" max="100" class="sliderSV sliderS" id="sSlide" value=100>
 			<input type="range" min="0" max="100" class="sliderSV sliderV" id="vSlide" value=100>
+		</div>
+		<div class="speedContainer" hidden>
+			<div class="sectionLine"></div>
+			<div class="sectionTitle">Animation Speed</div>
+			<div class="sectionLine"></div>
+			<input type="range" min="1" max="5" class="slider" id="speedSlider" value=3>
 		</div>
 		<div class="offButton">
 			<button type="button" class="buttonColor" style="
@@ -74,9 +84,9 @@
 				<button type="button" class="buttonColor" style="background-color: rgb( 64, 242, 255);" onclick="javascript:static( 64, 242, 255)"></button><div class="gap"></div>
 				<button type="button" class="buttonColor" style="background-color: rgb(128, 247, 255);" onclick="javascript:static(128, 247, 255)"></button><div class="gap"></div>
 				<button type="button" class="buttonColor" style="background-color: rgb(191, 251, 255);" onclick="javascript:static(191, 251, 255)"></button>
+				<div class="colorGridRow">
 			</div>
 			<!-- BLUE -->
-			<div class="colorGridRow">
 				<button type="button" class="buttonColor" style="background-color: rgb(  0,   0, 255);" onclick="javascript:static(  0,   0, 255)"></button><div class="gap"></div>
 				<button type="button" class="buttonColor" style="background-color: rgb( 63,  63, 255);" onclick="javascript:static( 63,  63, 255)"></button><div class="gap"></div>
 				<button type="button" class="buttonColor" style="background-color: rgb(127, 127, 255);" onclick="javascript:static(127, 127, 255)"></button><div class="gap"></div>
@@ -91,27 +101,39 @@
 			</div>
 			<!-- PINK H:319 -->
 			<div class="colorGridRow">
-			<button type="button" class="buttonColor" style="background-color: rgb(255,   0, 175);" onclick="javascript:static(255,   0, 175)"></button><div class="gap"></div>
-			<button type="button" class="buttonColor" style="background-color: rgb(255,  64, 194);" onclick="javascript:static(255,  64, 194)"></button><div class="gap"></div>
-			<button type="button" class="buttonColor" style="background-color: rgb(255, 128, 215);" onclick="javascript:static(255, 128, 215)"></button><div class="gap"></div>
-			<button type="button" class="buttonColor" style="background-color: rgb(255, 191, 235);" onclick="javascript:static(255, 191, 235)"></button>
+				<button type="button" class="buttonColor" style="background-color: rgb(255,   0, 175);" onclick="javascript:static(255,   0, 175)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255,  64, 194);" onclick="javascript:static(255,  64, 194)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 128, 215);" onclick="javascript:static(255, 128, 215)"></button><div class="gap"></div>
+				<button type="button" class="buttonColor" style="background-color: rgb(255, 191, 235);" onclick="javascript:static(255, 191, 235)"></button>
 			</div>
 		</div>
+		<input type="hidden" id="currentMode" onchange="javascript:updateVisibility();" />
 		
 		<script>
-			
 			// Forward JS calls
 			function animateHTML(mode) { animate(mode); }
+			function updateVisibility() {
+				var mode = document.getElementById("currentMode");
+				if (mode.value === "rainbow")
+				{
+					mode.removeAttribute("hidden");
+				}
+				else
+				{
+					mode.setAttribute("hidden");
+				}
+			}
 			
 			// Handle HSV sliders
 			let hSlider	= document.getElementById("hSlide");
 			let sSlider	= document.getElementById("sSlide");
 			let vSlider	= document.getElementById("vSlide");
+			let speedSlider = document.getElementById("speedSlider");
 			
 			hSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
 			sSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
 			vSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
-			
+			speedSlider.oninput = function() { javascript:animateWithSpeed()}
 		</script>
 		
 	</body>

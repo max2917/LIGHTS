@@ -21,13 +21,18 @@ def rainbowChase():
 
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
-	if (speed == 0): speed = 0.001
+	delay = 0.001
+	if (speed == 1): delay = 0.00025
+	if (speed == 2): delay = 0.0005
+	if (speed == 3): delay = 0.001
+	if (speed == 4): delay = 0.0025
+	if (speed == 5): delay = 0.005
 	print("Rainbow speed: ", speed)
 
 	def update(red, green, blue):
 		# Send update to bar and wait delay amount
 		with pixelLock: pixels.fill((red, green, blue))
-		time.sleep(speed)
+		time.sleep(delay)
 
 	while True:
 		if (animate == False): break
