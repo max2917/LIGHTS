@@ -94,9 +94,9 @@ def pride(speed):
 			if (i == 0):
 				with pixelLock: pixels[count] = (228, 3, 3)
 			elif (i == 1):
-				with pixelLock: pixels[count] = (255, 140, 0)
+				with pixelLock: pixels[count] = (255, 105, 0)
 			elif (i == 2):
-				with pixelLock: pixels[count] = (255, 237, 0)
+				with pixelLock: pixels[count] = (255, 250, 0)
 			elif (i == 3):
 				with pixelLock: pixels[count] = (0, 255, 0)
 			elif (i == 4):
