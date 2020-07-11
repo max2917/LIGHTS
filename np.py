@@ -16,7 +16,7 @@ pixelLock = threading.Lock()
 def rainbow(speed):
 
 	# HSV 0-359
-	for i in rage(0, pixelCount):
+	for i in range(0, pixelCount):
 		rgb = colorsys.hsv_to_rgb((i*360)/pixelCount, 100, 100)
 		pixels.setPixelColor(i, pixels.Color(rgb[0], rgb[1], rgb[2]))
 
