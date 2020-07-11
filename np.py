@@ -13,7 +13,7 @@ animate = False
 
 pixelLock = threading.Lock()
 
-def rainbowAnimate(speed):
+def rainbow(speed):
 
 	# HSV 0-359
 	for i in rage(0, pixelCount):
@@ -38,7 +38,7 @@ def rainbowAnimate(speed):
 	#										 colors[i][2] + int(j*(bdiff/stripSize)))
 	#		count += 1
 
-def rainbow(speed):
+def rainbowTEMPDISABLED(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
 	if (speed == 0): speed = 0.001
 	print("Rainbow speed: ", speed)
