@@ -3,6 +3,7 @@ import neopixel
 import socket
 import time
 import threading
+import colorsys
 from queue import Queue
 
 previousButton = "none"
@@ -12,7 +13,30 @@ animate = False
 
 pixelLock = threading.Lock()
 
-	
+def rainbowAnimate(speed):
+
+	# HSV 0-359
+	for i in rage(0, pixelCount):
+		rgb = colorsys.hsv_to_rgb((i*360)/pixelCount, 100, 100)
+		pixels.setPixelColor(i, pixels.Color(rgb[0], rgb[1], rgb[2]))
+
+	#colors = ((228, 3, 3), (255, 140, 0), (255, 237, 0), (0, 255, 0), (0, 77, 255), (117, 7, 135), (138, 43, 226))
+	#leftover = pixelCount%6
+	#count = 0
+	#for i in range(0, 6):
+	#	stripSize = (pixelCount/6)
+	#	if (i < leftover):
+	#		stripSize += 1
+	#
+	#	rdiff = colors[i+1][0] - colors[i][0]
+	#	gdiff = colors[i+1][1] - colors[i][1]
+	#	bdiff = colors[i+1][2] - colors[i][2]
+	#
+	#	for j in range(0, int(stripSize)):
+	#		with pixelLock: pixels[count] = (colors[i][0] + int(j*(rdiff/stripSize)), 
+	#		                                 colors[i][1] + int(j*(gdiff/stripSize)),
+	#										 colors[i][2] + int(j*(bdiff/stripSize)))
+	#		count += 1
 
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
@@ -58,22 +82,25 @@ def rainbow(speed):
 def pride(speed):
 	print("PRIDE")
 	
-	colors = ((228, 3, 3), (255, 140, 0), (255, 237, 0), (0, 255, 0), (0, 77, 255), (117, 7, 135), (138, 43, 226))
 	leftover = pixelCount%6
 	count = 0
 	for i in range(0, 6):
 		stripSize = (pixelCount/6)
 		if (i < leftover):
 			stripSize += 1
-
-		rdiff = colors[i+1][0] - colors[i][0]
-		gdiff = colors[i+1][1] - colors[i][1]
-		bdiff = colors[i+1][2] - colors[i][2]
-
 		for j in range(0, int(stripSize)):
-			with pixelLock: pixels[count] = (colors[i][0] + int(j*(rdiff/stripSize)), 
-			                                 colors[i][1] + int(j*(gdiff/stripSize)),
-											 colors[i][2] + int(j*(bdiff/stripSize)))
+			if (i == 0):
+				with pixelLock: pixels[count] = (228, 3, 3)
+			elif (i == 1):
+				with pixelLock: pixels[count] = (255, 140, 0)
+			elif (i == 2):
+				with pixelLock: pixels[count] = (255, 237, 0)
+			elif (i == 3):
+				with pixelLock: pixels[count] = (0, 255, 0)
+			elif (i == 4):
+				with pixelLock: pixels[count] = (0, 77, 255)
+			elif (i == 5):
+				with pixelLock: pixels[count] = (117, 7, 135)
 			count += 1
 
 def strobe():
