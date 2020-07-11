@@ -11,6 +11,7 @@ body {
 
 :root {
 	--offWhite:		rgb(250, 250, 250);
+	--dimWhite:		rgb(210, 210, 210);
 	--offBlack:		#0e0e0e;
 	--buttonSize:	150px;
 	--sliderHeight:	100px;
@@ -49,7 +50,35 @@ body {
 	width: var(--sidePadd);
 }
 .sectionTitle {
-	color: var(--offWhite);
+	display:		flex;
+	flex-grow: 		1;
+	color:			var(--dimWhite);
+	margin-bottom:	var(--vertMargin);
+	font-size:		30px;
+	text-align:		center;
+	background:		rgba(0, 200, 0, 1);
+	/*background:
+		linear-gradient(
+			to right,
+			rgba(0, 0, 0, 0),
+			rgba(0, 0, 0, 0) 40%,
+			var(--offBlack) 40%,
+			var(--offBlack) 60%,
+			rgba(0, 0, 0, 0) 60%
+		)*/
+}
+.sectionLine {
+	display:	flex;
+	flex-grow:	2;
+	height: 5px;
+	background:	var(--dimWhite);
+}
+.sectionContainer {
+	width:				100%;
+	display:			flex;
+	flex-wrap:			nowrap;
+	flex-direction:		row;
+	justify-content:	space-evenly;
 }
 .animationButtonContainer {
 	margin-top:		5%;
