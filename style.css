@@ -48,6 +48,9 @@ body {
 	/* used for spacing in flex boxes */
 	width: var(--sidePadd);
 }
+.sectionTitle {
+	color: var(--offWhite);
+}
 .animationButtonContainer {
 	margin-top:		5%;
 	margin-bottom:	var(--vertMargin);
