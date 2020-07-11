@@ -129,11 +129,12 @@
 			let sSlider	= document.getElementById("sSlide");
 			let vSlider	= document.getElementById("vSlide");
 			let speedSlider = document.getElementById("speedSlider");
+			let currentMode = document.getElementById("currentMode");
 			
 			hSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
 			sSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
 			vSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
-			speedSlider.oninput = function() { javascript:animateWithSpeed()}
+			speedSlider.oninput = function() { javascript:animateWithSpeed(currentMode.value, speedSlider.value) }
 		</script>
 		
 	</body>

@@ -43,6 +43,7 @@ function animate(mode) {
 };
 
 function animateWithSpeed(mode, speed) {
+    console.log("ANIMATE WITH SPEED");
     request("mode="+mode+"&speed="+speed);
     var currentMode = document.getElementById("currentMode");
     if (currentMode) currentMode.value = mode;
