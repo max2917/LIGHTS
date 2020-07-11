@@ -6,7 +6,7 @@ import threading
 from queue import Queue
 
 previousButton = "none"
-pixelCount = 36
+pixelCount = 20
 pixels = neopixel.NeoPixel(board.D18, pixelCount)
 animate = False
 
@@ -58,11 +58,10 @@ def pride(speed):
 	print("PRIDE")
 	
 	leftover = pixelCount%6
-	index = 0
-	print("stripSize: ", int(stripSize))
+	count = 0
 	for i in range(0, 6):
 		stripSize = (pixelCount/6)
-		if (i > leftover)
+		if (i < leftover):
 			stripSize += 1
 
 		for j in range(0, int(stripSize)):
