@@ -23,10 +23,8 @@ function static(r, g, b) {
 	sSlider.value = `${HSV.s}`;
 	vSlider.value = `${HSV.v}`;
 	
-	// need to add a white panel with S controlled transparency and a
-	//  black pannel with V controlled transparency to H slider
-	// This could likely be done with two background descriptors instead
-	//  of the inset workaround currently in place
+	// white panel with S controlled transparency and a black pannel with
+	//  V controlled transparency to H slider
 	// NOTE: hSlider.style must be updated to be equal to the buttonHeight
 	//  variable in style.css
 	hSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(sSlider.value/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(vSlider.value/100))})`;
@@ -44,9 +42,7 @@ function animate(mode) {
 // Update light strip based on slider states
 function sliderUpdate(h, s, v) {
 	// Convert HSV input to RGB then call static to set color
-	console.log("sliderUpdate: ", h, s, v);
 	let rgb = HSVtoRGB(h, (s/100), (v/100));
-	console.log("sliderUpdate: ", rgb.r, rgb.g, rgb.b);
 	static(rgb.r, rgb.g, rgb.b);
 };
 
