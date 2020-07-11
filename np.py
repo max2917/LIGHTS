@@ -12,6 +12,7 @@ animate = False
 
 pixelLock = threading.Lock()
 
+	
 
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
