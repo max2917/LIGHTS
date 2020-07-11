@@ -56,24 +56,29 @@ def rainbow(speed):
 
 def pride(speed):
 	print("PRIDE")
-	stripSize = (pixelCount/6)
+	
+	leftover = pixelCount%6
 	index = 0
-	#with pixelLock: pixels[0] = (255, 255, 255)
 	print("stripSize: ", int(stripSize))
 	for i in range(0, 6):
+		stripSize = (pixelCount/6)
+		if (i > leftover)
+			stripSize += 1
+
 		for j in range(0, int(stripSize)):
 			if (i == 0):
-				with pixelLock: pixels[(i*int(stripSize))+j] = (228, 3, 3)
+				with pixelLock: pixels[count] = (228, 3, 3)
 			elif (i == 1):
-				with pixelLock: pixels[(i*int(stripSize))+j] = (255, 140, 0)
+				with pixelLock: pixels[count] = (255, 140, 0)
 			elif (i == 2):
-				with pixelLock: pixels[(i*int(stripSize))+j] = (255, 237, 0)
+				with pixelLock: pixels[count] = (255, 237, 0)
 			elif (i == 3):
-				with pixelLock: pixels[(i*int(stripSize))+j] = (0, 255, 0)
+				with pixelLock: pixels[count] = (0, 255, 0)
 			elif (i == 4):
-				with pixelLock: pixels[(i*int(stripSize))+j] = (0, 77, 255)
+				with pixelLock: pixels[count] = (0, 77, 255)
 			elif (i == 5):
-				with pixelLock: pixels[(i*int(stripSize))+j] = (117, 7, 135)
+				with pixelLock: pixels[count] = (117, 7, 135)
+			count += 1
 
 def strobe():
 	print("STROBE")
