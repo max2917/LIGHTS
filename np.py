@@ -13,34 +13,13 @@ animate = False
 
 pixelLock = threading.Lock()
 
-def rainbow(speed):
-
-	# HSV 0-359
+def rainbowChase(speed):
+	# Animate bar with rainbow
 	for i in range(1, pixelCount):
-		print("H: ", (i/pixelCount))
 		rgb = colorsys.hsv_to_rgb(i/pixelCount, 1, 1)
-		print("RGB: ", 255*rgb[0], " ", 255*rgb[1], " ", 255*rgb[2])
 		with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
-	#colors = ((228, 3, 3), (255, 140, 0), (255, 237, 0), (0, 255, 0), (0, 77, 255), (117, 7, 135), (138, 43, 226))
-	#leftover = pixelCount%6
-	#count = 0
-	#for i in range(0, 6):
-	#	stripSize = (pixelCount/6)
-	#	if (i < leftover):
-	#		stripSize += 1
-	#
-	#	rdiff = colors[i+1][0] - colors[i][0]
-	#	gdiff = colors[i+1][1] - colors[i][1]
-	#	bdiff = colors[i+1][2] - colors[i][2]
-	#
-	#	for j in range(0, int(stripSize)):
-	#		with pixelLock: pixels[count] = (colors[i][0] + int(j*(rdiff/stripSize)), 
-	#		                                 colors[i][1] + int(j*(gdiff/stripSize)),
-	#										 colors[i][2] + int(j*(bdiff/stripSize)))
-	#		count += 1
-
-def rainbowTEMPDISABLED(speed):
+def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
 	if (speed == 0): speed = 0.001
 	print("Rainbow speed: ", speed)
@@ -122,6 +101,9 @@ def threader():
 		if (params[0] == "rainbow"):
 			rainbow(int(params[1]))
 			q.task_done()
+		elif(params[0] == "rainbowChase"):
+			rainbowChase()
+			q.task_done()
 		elif (params[0] == "pride"):
 			pride(int(params[1]))
 			q.task_done()
@@ -171,6 +153,17 @@ while True:
 						previousButton = "none"
 					elif (d[0] == "rainbow"):
 						print("previous button", d[0])
+						previousButton = d[0]
+						animate = False
+						time.sleep(0.01)
+						animate = True
+
+						t = threading.Thread(target = threader)
+						t.daemon = True
+						t.start()
+						params = [d[0], d[1]] # Name and speed of animation
+						q.put(params)
+					elif (d[0] == "rainbowChase"):
 						previousButton = d[0]
 						animate = False
 						time.sleep(0.01)
