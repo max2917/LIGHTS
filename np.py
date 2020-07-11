@@ -6,7 +6,7 @@ import threading
 from queue import Queue
 
 previousButton = "none"
-pixelCount = 20
+pixelCount = 34
 pixels = neopixel.NeoPixel(board.D18, pixelCount)
 animate = False
 
