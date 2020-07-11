@@ -33,7 +33,7 @@
 			<input type="range" min="0" max="100" class="sliderSV sliderS" id="sSlide" value=100>
 			<input type="range" min="0" max="100" class="sliderSV sliderV" id="vSlide" value=100>
 		</div>
-		<div class="speedContainer" hidden>
+		<div class="speedContainer" display="none">
 			<div class="sectionLine"></div>
 			<div class="sectionTitle">Animation Speed</div>
 			<div class="sectionLine"></div>
@@ -116,11 +116,11 @@
 				var mode = document.getElementById("currentMode");
 				if (mode.value === "rainbow")
 				{
-					mode.removeAttribute("hidden");
+					mode.style.display = "block";
 				}
 				else
 				{
-					mode.setAttribute("hidden");
+					mode.style.display = "none";
 				}
 			}
 			

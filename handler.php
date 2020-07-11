@@ -4,7 +4,11 @@ if (isset($_GET['mode']) and isset($_GET['red']) and isset($_GET['green']) and i
 	send_color($_GET['mode'], $_GET['red'], $_GET['green'], $_GET['blue']);
 }
 elseif (isset($_GET['mode'])) {
-	if     ($_GET['mode'] == "rainbow")			{ send_color("rainbow", "0", "0", "0"); }
+	if     ($_GET['mode'] == "rainbow")			
+	{
+		if (isset($_GET['speed'])) { send_color("rainbow", $_GET['speed'], "0", "0"); }
+		else                       { send_color("rainbow", "0", "0", "0");            }  
+	}
 	elseif ($_GET['mode'] == "pride")			{ send_color("pride", "0", "0", "0"); }
 	elseif ($_GET['mode'] == "strobe")			{ send_color("strobe", "0", "0", "0"); }
 	elseif ($_GET['mode'] == "rainbowChase")	{ send_color("rainbowChase", "0", "0", "0"); }
