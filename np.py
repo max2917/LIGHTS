@@ -58,7 +58,7 @@ def pride(speed):
 	print("PRIDE")
 	stripSize = (pixelCount/6)
 	index = 0
-#	with pixelLock: pixels[0] = (255, 255, 255)
+	#with pixelLock: pixels[0] = (255, 255, 255)
 	print("stripSize: ", int(stripSize))
 	for i in range(0, 6):
 		for j in range(0, int(stripSize)):
