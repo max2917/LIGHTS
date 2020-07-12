@@ -84,9 +84,10 @@ body {
 	margin-bottom:	var(--vertMargin);
 	padding-left:	var(--sidePadd);
 	padding-right:	var(--sidePadd);
-	
-	display:			flex;
-	justify-content:	space-between;
+}
+.animationButtonRow {
+	display:		flex;
+	margin-bottom:	var(--vertMargin);
 }
 .slideContainer {
 	margin-bottom:	var(--vertMargin);
@@ -129,6 +130,7 @@ button {
 .buttonAnimation {
 	height: 100px;
 	flex-grow: 1;
+	width:	50%;
 }
 .buttonColor {
 	width:			var(--buttonSize);
