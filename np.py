@@ -15,7 +15,7 @@ pixelLock = threading.Lock()
 
 def rainbowChase():
 	# Animate bar with rainbow
-	int i = 1
+	i = 1
 	while (animate == true):
 		if (i < pixelCount): i += 1
 		elif: i = 1
