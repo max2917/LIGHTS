@@ -18,7 +18,7 @@ def rainbowChase():
 	i = 0
 	while (animate == True):
 		print("i = ", i)
-		for j in range(1, pixelCount):
+		for j in range(0, pixelCount):
 			print("i: ", i, " j: ", j)
 			if (animate == False): break
 			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
