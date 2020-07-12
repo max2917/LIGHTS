@@ -18,7 +18,7 @@ def rainbowChase():
 	i = 1
 	while (animate == true):
 		if (i < pixelCount): i += 1
-		elif: i = 1
+		else: i = 1
 		print("i = ", i)
 		for j in range(1, pixelCount):
 			if (animate == false): break
