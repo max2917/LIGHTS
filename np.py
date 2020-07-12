@@ -23,8 +23,10 @@ def rainbowChase():
 		for j in range(0, pixelCount):
 			# Loop through the entire strip to fill it with the current rainbow state
 			if (animate == False): break
+
 			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
 			with pixelLock: pixels[j] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
+			
 		if (i < pixelCount): i += 1
 		else: i = 0
 

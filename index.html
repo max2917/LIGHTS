@@ -13,13 +13,14 @@
 	</head>
 	
 	<body>
-		<section class="sectionContainer">
+		<section class="sectionContainer" style="margin-top: 5%;">
 			<div class="gap"></div>
 			<div class="sectionLine sectionLineL"></div>
 			<div class="sectionTitle">Animations</div>
 			<div class="sectionLine sectionLineR"></div>
 			<div class="gap"></div>
 		</section>
+
 		<section class="animationButtonContainer">
 			<div class="animationButtonRow">
 				<button type="button" class="buttonAnimation buttonStrobe" onclick="javascript:animateHTML('strobe')">Strobe</button>
@@ -32,6 +33,7 @@
 				<button type="button" class="buttonAnimation buttonPride" onclick="javascript:animateHTML('pride')">Pride</button>
 			</div>
 		</section>
+		
 		<section class="sectionContainer">
 			<div class="gap"></div>
 			<div class="sectionLine sectionLineL"></div>
@@ -39,26 +41,32 @@
 			<div class="sectionLine sectionLineR"></div>
 			<div class="gap"></div>
 		</section>
+		
 		<div class="slideContainer">
 			<input type="range" min="0" max="359" class="slider sliderH" id="hSlide">
 			<input type="range" min="0" max="100" class="sliderSV sliderS" id="sSlide" value=100>
 			<input type="range" min="0" max="100" class="sliderSV sliderV" id="vSlide" value=100>
 		</div>
-		<div class="offButton">
-			<button type="button" class="buttonColor" style="
-				background-color:	black;
-				color:				white;
-				width:				100%;
-				font-size:			70px;
-				height:				100px;
-			" onclick="javascript:static(0, 0, 0)">Off</button>
-		</div>
+		
 		<section class="sectionContainer">
 			<div class="gap"></div>
 			<div class="sectionLine sectionLineL"></div>
 			<div class="sectionTitle">Colors</div>
 			<div class="sectionLine sectionLineR"></div>
 			<div class="gap"></div>
+		</section>
+		<section class="animationButtonContainer">
+			<div class="animationButtonRow">
+				<button type="button" class="buttonAnimation" style="
+					background:	black;
+					color:		white;
+					font-size:	60px;
+				" onclick="javascript:static(0, 0, 0)">Off</button>
+				<div class="gap"></div>
+				<button type="button" class="buttonAnimation" style="
+					font-size:	60px;
+				" onclick="javascript:static(255, 255, 255)">White</button>
+			</div>
 		</section>
 		<div class="colorGrid">
 			<!-- RED -->
