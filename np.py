@@ -25,7 +25,7 @@ def rainbowChase():
 			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
 			else: rgb = colorsys.hsv_to_rgb((i-j)/pixelCount, 1, 1)
 
-			with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
+			with pixelLock: pixels[j] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
