@@ -13,7 +13,7 @@ pixels = neopixel.NeoPixel(board.D18, pixelCount)
 animate = False
 
 pixelLock = threading.Lock()
-rainbowSched = scheduler()
+rainbowSched = sched.scheduler()
 
 def rainbowChase():
 	# Animate bar with rainbow
@@ -31,17 +31,20 @@ def rainbowChase():
 
 rainbowHue = 0
 rainbowTick = 0.001
+rainbowSpeed = 0.001
 
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
 	if (speed == 0): speed = 0.001
 	print("Rainbow speed: ", speed)
 	
+	rainbowSpeed = speed
 	rainbowHue = 0
 	rainbowTick = 0.001
-	rainbowSched.enter(speed, 1, update)
-	
+	rainbowSched.enter(rainbowSpeed, 1, update)
+	rainbowSched.run()
 	def update():
+		rainbowSched.enter(rainbowSpeed, 1, update)
 		if (rainbowHue + rainbowTick > 1.0 or rainbowHue + rainbowTick < 0.0):
 			rainbowTick *= -1
 		rainbowHue += rainbowTick
@@ -122,6 +125,8 @@ while True:
 					if (previousButton == d[0]):
 						# If the same button is pressed twice, do nothing
 						break
+					elif (not rainbowSched.empty()):
+						rainbowSched.queue.clear()
 					elif (threading.activeCount() > 1):
 						# Else, switching mode, stop any threads
 						#print("ACTIVE THREADS")
