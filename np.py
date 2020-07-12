@@ -50,7 +50,7 @@ def rainbow(speed):
 			rainbowTick *= -1
 		rainbowHue += rainbowTick
 		rgb = colorsys.hsv_to_rgb(rainbowHue, 1, 1)
-		with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
+		with pixelLock: pixels.fill(int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
 	rainbowSched.enter(rainbowSpeed, 1, update)
 	rainbowSched.run()
