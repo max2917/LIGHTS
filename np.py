@@ -15,15 +15,16 @@ pixelLock = threading.Lock()
 
 def rainbowChase():
 	# Animate bar with rainbow
-	i = 1
+	i = 0
 	while (animate == True):
 		if (i < pixelCount): i += 1
-		else: i = 1
+		else: i = 0
 		print("i = ", i)
 		for j in range(1, pixelCount):
 			if (animate == False): break
 			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
 			else: rgb = colorsys.hsv_to_rgb((i-j)/pixelCount, 1, 1)
+
 			with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
 def rainbow(speed):
