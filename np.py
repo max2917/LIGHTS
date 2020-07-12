@@ -29,9 +29,9 @@ def rainbowChase():
 
 			with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
-rainbowHue = 0
-rainbowTick = 0.001
-rainbowSpeed = 0.001
+global rainbowHue = 0
+global rainbowTick = 0.001
+global rainbowSpeed = 0.001
 
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
