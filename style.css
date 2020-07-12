@@ -52,14 +52,14 @@ body {
 .sectionTitle {
 	display:		flex;
 	color:			var(--dimWhite);
-	margin-bottom:	var(--vertMargin);
+	margin-bottom:	calc(var(--vertMargin)/3);
 	padding-left:	8px;
 	padding-right:	8px;
 	font-size:		18px;
 }
 .sectionLine {
 	display:		flex;
-	margin-bottom:	var(--vertMargin);
+	margin-bottom:	calc(var(--vertMargin)/3);
 	background:
 		linear-gradient(
 			to bottom,

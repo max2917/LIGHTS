@@ -35,10 +35,10 @@ def rainbow(speed):
 	if (speed == 0): speed = 0.001
 
 	while True:
-		for i in range(0, 359):
+		for i in range(1, 359):
 			if (animate == False): break
-			rgb = colorsys.hsv_to_rgb(359/i, 1, 1)
-			with pixelLock: pixels.fill(rgb[0], rgb[1], rgb[2])
+			rgb = colorsys.hsv_to_rgb(i/359, 1, 1)
+			with pixelLock: pixels.fill((int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2])))
 			#time.sleep(speed)
 
 def pride(speed):
