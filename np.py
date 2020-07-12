@@ -17,13 +17,12 @@ def rainbowChase():
 	# Animate bar with rainbow
 	i = 0
 	while (animate == True):
-		print("i = ", i)
 		for j in range(0, pixelCount):
-			print("i: ", i, " j: ", j)
+			# Loop through the entire strip to fill it with the current rainbow state
 			if (animate == False): break
-			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
-			else: rgb = colorsys.hsv_to_rgb((i-j)/pixelCount, 1, 1)
-
+			if (j <= pixelCount):
+				rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
+			#else: rgb = colorsys.hsv_to_rgb((i-j)/pixelCount, 1, 1)
 			with pixelLock: pixels[j] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 		if (i < pixelCount): i += 1
 		else: i = 0
