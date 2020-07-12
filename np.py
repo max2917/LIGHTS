@@ -4,6 +4,7 @@ import socket
 import time
 import threading
 import colorsys
+import sched
 from queue import Queue
 
 previousButton = "none"
@@ -12,6 +13,7 @@ pixels = neopixel.NeoPixel(board.D18, pixelCount)
 animate = False
 
 pixelLock = threading.Lock()
+rainbowSched = scheduler()
 
 def rainbowChase():
 	# Animate bar with rainbow
@@ -27,46 +29,24 @@ def rainbowChase():
 
 			with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
+rainbowHue = 0
+rainbowTick = 0.001
+
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
 	if (speed == 0): speed = 0.001
 	print("Rainbow speed: ", speed)
-
-	def update(red, green, blue):
-		# Send update to bar and wait delay amount
-		with pixelLock: pixels.fill((red, green, blue))
-		time.sleep(speed)
-
-	while True:
-		if (animate == False): break
-		# Continuous loop through rainbow
-		r = 255
-		g = 0
-		b = 0
-		for x in range(0, 255):
-			if (animate == False): break
-			g = g + 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			r = r - 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			b = b + 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			g = g - 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			r = r + 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			b = b - 1
-			update(r, g, b)
+	
+	rainbowHue = 0
+	rainbowTick = 0.001
+	rainbowSched.enter(speed, 1, update)
+	
+	def update():
+		if (rainbowHue + rainbowTick > 1.0 or rainbowHue + rainbowTick < 0.0):
+			rainbowTick *= -1
+		rainbowHue += rainbowTick
+		rgb = colorsys.hsv_to_rgb(rainbowHue, 1, 1)
+		with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
 def pride(speed):
 	print("PRIDE")
