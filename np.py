@@ -26,50 +26,20 @@ def rainbowChase():
 
 			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
 			with pixelLock: pixels[j] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
-			
+
 		if (i < pixelCount): i += 1
 		else: i = 0
 
 def rainbow(speed):
 	# Animate entire bar (with fill) through the rainbow at speed in seconds (between each color)
 	if (speed == 0): speed = 0.001
-	print("Rainbow speed: ", speed)
-
-	def update(red, green, blue):
-		# Send update to bar and wait delay amount
-		with pixelLock: pixels.fill((red, green, blue))
-		time.sleep(speed)
 
 	while True:
-		if (animate == False): break
-		# Continuous loop through rainbow
-		r = 255
-		g = 0
-		b = 0
-		for x in range(0, 255):
+		for i in range(0, 359):
 			if (animate == False): break
-			g = g + 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			r = r - 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			b = b + 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			g = g - 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			r = r + 1
-			update(r, g, b)
-		for x in range(0, 255):
-			if (animate == False): break
-			b = b - 1
-			update(r, g, b)
+			rgb = colorsys.hsv_to_rgb(359/i, 1, 1)
+			with pixelLock: pixels.fill(rgb[0], rgb[1], rgb[2])
+			#time.sleep(speed)
 
 def pride(speed):
 	print("PRIDE")
