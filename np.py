@@ -38,17 +38,18 @@ def rainbow(speed):
 	if (speed == 0): speed = 0.001
 	print("Rainbow speed: ", speed)
 	
+	rainbowSpeed = speed
+	rainbowHue = 0
+	rainbowTick = 0.001
+
 	def update():
 		rainbowSched.enter(rainbowSpeed, 1, update)
-		if (rainbowHue + rainbowTick > 1.0 or rainbowHue + rainbowTick < 0.0):
+		if (((rainbowHue + rainbowTick) > 1.0) or ((rainbowHue + rainbowTick) < 0.0)):
 			rainbowTick *= -1
 		rainbowHue += rainbowTick
 		rgb = colorsys.hsv_to_rgb(rainbowHue, 1, 1)
 		with pixelLock: pixels[i] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
-	rainbowSpeed = speed
-	rainbowHue = 0
-	rainbowTick = 0.001
 	rainbowSched.enter(rainbowSpeed, 1, update)
 	rainbowSched.run()
 
