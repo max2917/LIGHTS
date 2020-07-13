@@ -8,7 +8,7 @@ import sched
 from queue import Queue
 
 previousButton = "none"
-pixelCount = 34
+pixelCount = 150
 pixels = neopixel.NeoPixel(board.D18, pixelCount)
 animate = False
 

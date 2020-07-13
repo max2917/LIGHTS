@@ -16,7 +16,7 @@ else {
 
 function send_color($mode, $red, $green, $blue) {
 	// UPDATE THIS IP IF THE SERVER MOVED OR CHANGED
-	$server = "192.168.0.168";
+	$server = "192.168.1.140";
 	$fp = fsockopen($server, 10250, $errno, $errstr, 30);
 
 
