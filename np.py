@@ -9,7 +9,7 @@ from queue import Queue
 
 previousButton = "none"
 pixelCount = 150
-pixels = neopixel.NeoPixel(board.D18, pixelCount)
+pixels = neopixel.NeoPixel(board.D18, pixelCount, auto_write = False)
 animate = False
 
 pixelLock = threading.Lock()
@@ -29,6 +29,7 @@ def rainbowChase():
 			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
 			with pixelLock: pixels[j] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 
+		pixels.show()
 		if (i < pixelCount): i += 1
 		else: i = 0
 
