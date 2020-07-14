@@ -60,6 +60,7 @@ def rainbow(speed):
 		rainbowHue += rainbowTick
 		rgb = colorsys.hsv_to_rgb(rainbowHue, 1, 1)
 		with pixelLock: pixels.fill((int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2])))
+		pixels.show()
 
 	rainbowSched.enter(rainbowSpeed, 1, update)
 	rainbowSched.run()
@@ -87,15 +88,18 @@ def pride(speed):
 			elif (i == 5):
 				with pixelLock: pixels[count] = (117, 7, 135)
 			count += 1
+	pixels.show()
 
 def strobe():
 	print("STROBE")
 	while True:
 		if (animate == False): break
 		with pixelLock: pixels.fill((0, 0, 0))
+		pixels.show()
 		time.sleep(0.1)
 		if (animate == False): break
 		with pixelLock: pixels.fill((255, 255, 255))
+		pixels.show()
 
 def threader():
 	while True:
@@ -151,6 +155,7 @@ while True:
 					# Split by animation flag
 					if (d[0] == "static"):
 						with pixelLock: pixels.fill((int(float(d[1])), int(float(d[2])), int(float(d[3]))))
+						pixels.show()
 						# Previous set to "none" because this if block is not
 						#  computationally expensive or fragile. It also simplifies
 						#  the network packets to do it this way.
