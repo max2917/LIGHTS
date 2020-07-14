@@ -65,7 +65,7 @@ def rainbow(speed):
 	rainbowSched.enter(rainbowSpeed, 1, update)
 	rainbowSched.run()
 
-def pride(speed):
+def pride():
 	print("PRIDE")
 	
 	leftover = pixelCount%6
@@ -113,7 +113,7 @@ def threader():
 			rainbowChase()
 			q.task_done()
 		elif (params[0] == "pride"):
-			pride(int(params[1]))
+			pride()
 			q.task_done()
 		elif (params[0] == "strobe"):
 			strobe()
@@ -192,7 +192,7 @@ while True:
 						t = threading.Thread(target = threader)
 						t.daemon = True
 						t.start()
-						params = [d[0], d[1]] # Name and speed of animation
+						params = [d[0]] # Name and speed of animation
 						q.put(params)
 					elif (d[0] == "strobe"):
 						previousButton = d[0]
