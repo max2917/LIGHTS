@@ -76,11 +76,11 @@ def pride():
 			stripSize += 1
 		for j in range(0, int(stripSize)):
 			if (i == 0):
-				with pixelLock: pixels[count] = (228, 3, 3)
+				with pixelLock: pixels[count] = (250, 3, 3)
 			elif (i == 1):
-				with pixelLock: pixels[count] = (255, 105, 0)
+				with pixelLock: pixels[count] = (255, 25, 0)
 			elif (i == 2):
-				with pixelLock: pixels[count] = (255, 250, 0)
+				with pixelLock: pixels[count] = (255, 175, 0)
 			elif (i == 3):
 				with pixelLock: pixels[count] = (0, 255, 0)
 			elif (i == 4):
