@@ -12,7 +12,13 @@ function static(r, g, b) {
 	//var xhr = new XMLHttpRequest();
 	//xhr.open("GET", "handler.php?red="+r+"&green="+g+"&blue="+b, true);
 	//xhr.send();
-	console.log("static");
+    console.log("static");
+    
+    // Hide animation speed slider if a static option is selected
+    let animSlide = document.getElementById("animationSpeedSlider");
+    if (animSlide.style.display == "block") {
+        animSlide.style.display == "none";
+    }
 	
 	// Dynamically update the state of the sliders before sending
 	let hSlider	= document.getElementById("hSlide");
@@ -35,6 +41,13 @@ function static(r, g, b) {
 
 // Set light strip to some animated mode
 function animate(mode) {
+
+    // Show animation speed slider if an animation is selected
+    let animSlide = document.getElementById("animationSpeedSlider");
+    if (animSlide.style.display == "none") {
+        animSlide.style.display == "block";
+    }
+
 	console.log("ANIMATE\t", mode);
 	request("mode="+mode);
 };

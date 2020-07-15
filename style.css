@@ -252,6 +252,67 @@ button {
 	);
 	height: calc(var(--sliderHeight)/2);
 }
+.sliderAnimationSpeed {
+	background:
+		linear-gradient(
+			to right,
+			var(--offWhite) 9.75%,
+
+			var(--dimWhite) 9.75%,
+			var(--dimWhite) 19%,
+
+			var(--offWhite) 19%,
+			var(--offWhite) 27.75%,
+
+			var(--dimWhite) 27.75%,
+			var(--dimWhite) 36%,
+			
+			var(--offWhite) 36%,
+			var(--offWhite) 43.75%,
+
+			var(--dimWhite) 43.75%,
+			var(--dimWhite) 51%,
+
+			var(--offWhite) 51%,
+			var(--offWhite) 57.75%,
+
+			var(--dimWhite) 57.75%,
+			var(--dimWhite) 64%,
+
+			var(--offWhite) 64%,
+			var(--offWhite) 69.75%,
+
+			var(--dimWhite) 69.75%,
+			var(--dimWhite) 75%,
+
+			var(--offWhite) 75%,
+			var(--offWhite) 79.75%,
+
+			var(--dimWhite) 79.75%,
+			var(--dimWhite) 84%,
+			
+			var(--offWhite) 84%,
+			var(--offWhite) 87.75%,
+
+			var(--dimWhite) 87.75%,
+			var(--dimWhite) 91%,
+
+			var(--offWhite) 91%,
+			var(--offWhite) 93.75%,
+
+			var(--dimWhite) 93.75%,
+			var(--dimWhite) 96%,
+
+			var(--offWhite) 96%,
+			var(--offWhite) 97.75%,
+
+			var(--dimWhite) 97.75%,
+			var(--dimWhite) 99%,
+
+			var(--offWhite) 99%
+		);
+	height: calc(var(--sliderHeight)/2);
+}
 .slider:hover {
 	/*opacity: 1; /* Fully shown on mouse-over */
 }
