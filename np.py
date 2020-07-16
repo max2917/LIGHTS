@@ -20,18 +20,18 @@ def rainbowChase():
 	# i is used to track the offset of the rainbow and shift it along the strip each
 	#  time the while loop is run
 	# the for loop is using j to paint the rainbow across the strip with i offset
-	i = 0
+	offset = 0
 	while (animate == True):
-		for j in range(0, pixelCount):
+		for i in range(0, pixelCount*10):
 			# Loop through the entire strip to fill it with the current rainbow state
 			if (animate == False): break
-
-			if (j <= pixelCount): rgb = colorsys.hsv_to_rgb((j+i)/pixelCount, 1, 1)
-			with pixelLock: pixels[j] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
-
+			if ((i % 10) == 0):
+				if (i <= (pixelCount*10)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*10), 1, 1)
+				with pixelLock: pixels[int(i/10)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 		pixels.show()
-		if (i < pixelCount): i += 1
-		else: i = 0
+		time.sleep(0.05)
+		if (offset < (pixelCount*10)): offset += 1
+		else: offset = 0
 
 rainbowHue = 0
 rainbowTick = 0.001
