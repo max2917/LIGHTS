@@ -13,11 +13,16 @@ function static(r, g, b) {
 	//xhr.open("GET", "handler.php?red="+r+"&green="+g+"&blue="+b, true);
 	//xhr.send();
     console.log("static");
-    
+
     // Hide animation speed slider if a static option is selected
     let animSlide = document.getElementById("animationSpeedSlider");
+    console.log("animSlide S "+animSlide.style.display);
     if (animSlide.style.display == "block") {
-        animSlide.style.display == "none";
+	console.log("animSlide STATIC entered");
+        animSlide.style.display = "none";
+    }
+    if (animSlide.style.display == "none") {
+        console.log("animSlide STATIC none entered");
     }
 	
 	// Dynamically update the state of the sliders before sending
@@ -44,8 +49,10 @@ function animate(mode) {
 
     // Show animation speed slider if an animation is selected
     let animSlide = document.getElementById("animationSpeedSlider");
+    console.log("animSlide A "+animSlide.style.display);
     if (animSlide.style.display == "none") {
-        animSlide.style.display == "block";
+	console.log("animSlide ANIMATE entered");
+        animSlide.style.display = "block";
     }
 
 	console.log("ANIMATE\t", mode);
