@@ -147,6 +147,12 @@ def threader():
 		elif (params[0] == "strobe"):
 			strobe()
 			q.task_done()
+		elif (params[0] == "police"):
+			police()
+			q.taks_done()
+		elif (params[0] == "fire"):
+			#fire()
+			q.task_done()
 
 q = Queue()
 
@@ -224,6 +230,28 @@ while True:
 						params = [d[0]] # Name and speed of animation
 						q.put(params)
 					elif (d[0] == "strobe"):
+						previousButton = d[0]
+						animate = False
+						time.sleep(0.01)
+						animate = True
+
+						t = threading.Thread(target = threader)
+						t.daemon = True
+						t.start()
+						params = [d[0]]
+						q.put(params)
+					elif (d[0] == "fire"):
+						previousButton = d[0]
+						animate = False
+						time.sleep(0.01)
+						animate = True
+
+						t = threading.Thread(target = threader)
+						t.daemon = True
+						t.start()
+						params = [d[0]]
+						q.put(params)
+					elif (d[0] == "police"):
 						previousButton = d[0]
 						animate = False
 						time.sleep(0.01)
