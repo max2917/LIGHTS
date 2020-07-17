@@ -188,6 +188,34 @@ button {
 			rgb(200, 200, 255) 50%
 		);
 }
+.buttonPolice {
+	background:
+		linear-gradient(
+			to bottom,
+			var(--offWhite),
+			var(--offWhite) 90%,
+			rgba(250, 250, 250, 0.0) 90%
+		),
+		linear-gradient(
+			to right,
+			red 50%,
+			blue 50%
+		);
+}
+.buttonFire {
+	background:
+		linear-gradient(
+			to bottom,
+			var(--offWhite),
+			var(--offWhite) 90%,
+			rgba(250, 250, 250, 0.0) 90%
+		),
+		linear-gradient(
+			to right,
+			red 50%,
+			white 50%
+		);
+}
 /* --- END BUTTONS --- */
 
 /* --- SLIDER --- */

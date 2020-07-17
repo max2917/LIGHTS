@@ -101,6 +101,35 @@ def strobe():
 		with pixelLock: pixels.fill((255, 255, 255))
 		pixels.show()
 
+def police():
+	while (animate == True):
+		segments = 8	# number of segments to create (switch cases will have to be altered)
+		leftover = pixelCount % segments
+		count = 0
+		for i in range(0, segments):
+			stripSize = (pixelCount/segments)
+			if (i < leftover):
+				stripSize += 1
+			for j in range(0, int(stripSize)):
+				if (i == 0):
+					with pixelLock: pixels[count] = (255, 0, 0)
+				elif (i == 1):
+						with pixelLock: pixels[count] = (0, 0, 255)
+				elif (i == 2):
+					with pixelLock: pixels[count] = (255, 0, 0)
+				elif (i == 3):
+					with pixelLock: pixels[count] = (0, 0, 255)
+				elif (i == 4):
+					with pixelLock: pixels[count] = (255, 0, 0)
+				elif (i == 5):
+					with pixelLock: pixels[count] = (0, 0, 255)
+				elif (i == 6):
+					with pixelLock: pixels[count] = (255, 0, 0)
+				elif (i == 7):
+					with pixelLock: pixels[count] = (0, 0, 255)
+				count += 1
+		pixels.show()
+
 def threader():
 	while True:
 		# Get params for this thread
