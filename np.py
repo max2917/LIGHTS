@@ -29,7 +29,7 @@ def rainbowChase():
 				if (i <= (pixelCount*10)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*10), 1, 1)
 				with pixelLock: pixels[int(i/10)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 		pixels.show()
-		time.sleep(0.05)
+#		time.sleep(0.05)
 		if (offset < (pixelCount*10)): offset += 1
 		else: offset = 0
 
