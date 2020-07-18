@@ -102,12 +102,15 @@ def strobe():
 		pixels.show()
 
 def police():
+
+	br13 = 0
+	br2 = 0
+	brw = 0
+
 	while (animate == True):
 		segments = 8	# number of segments to create (switch cases will have to be altered)
 		leftover = pixelCount % segments
 		count = 0
-
-		test = 0
 
 		# Divide the strip into segments
 		for i in range(0, segments):
@@ -116,29 +119,57 @@ def police():
 				stripSize += 1
 			for j in range(0, int(stripSize)):
 				# Fill each segment
-				if (i == 0):
-					if (test == 0):
+				if (i == 0 or i == 3):
+					# RED 1, 3
+					if (br13 == 2 or br13 == 8 or br13 == 11 or br13 == 14 or br13 == 17):
 						with pixelLock: pixels[count] = (255, 0, 0)
-					elif (test == 1):
-						with pixelLock: pixels[count] = (255, 255, 255)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
 				elif (i == 1):
+					# RED 2
+					# 12 on, 2 off, 1 on, 8 off, 1 on, 2 off, 9 on, 14 off
+					if (br2 <= 11 or br2 == 14 or br2 == 23 or (br2 >= 26 and br2 <= 35) or br2 == 38 or br2 == 45):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 2 or i == 5):
+					# WHITE R, B
+					# 6R, 6B, 6R, 6B, 9R, 9B
+					if ((brw >= 0 and brw <=5) or (brw >= 12 and brw <= 17) or (brw >= 24 and brw <= 32)):
+						if (i ==2):
+							with pixelLock: pixels[count] = (255, 255, 255)
+						if (i == 5):
+							with pixelLock: pixels[count] = (0, 0, 0)
+					else:
+						if (i ==2):
+							with pixelLock: pixels[count] = (0, 0, 0)
+						if (i == 5):
+							with pixelLock: pixels[count] = (255, 255, 255)
+				elif (i == 4 or i == 7):
+					# BLUE 1, 3
+					if (br13 == 6 or br13 == 12 or br13 == 15 or br13 == 18 or br13 == 3):
 						with pixelLock: pixels[count] = (0, 0, 255)
-				elif (i == 2):
-					with pixelLock: pixels[count] = (255, 0, 0)
-				elif (i == 3):
-					with pixelLock: pixels[count] = (0, 0, 255)
-				elif (i == 4):
-					with pixelLock: pixels[count] = (255, 0, 0)
-				elif (i == 5):
-					with pixelLock: pixels[count] = (0, 0, 255)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
 				elif (i == 6):
-					with pixelLock: pixels[count] = (255, 0, 0)
-				elif (i == 7):
-					with pixelLock: pixels[count] = (0, 0, 255)
+					# BLUE 2, Same as RED 2 with offset
+					# 12 on, 2 off, 1 on, 8 off, 1 on, 2 off, 9 on, 14 off
+					if ((br2 >= 11 and br2 <= 23) or br2 == 26 or br2 == 35 or (br2 >= 38 and br2 <= 47) or br2 == 1 or br2 == 8):
+						with pixelLock: pixels[count] = (0, 0, 255)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
 				count += 1
-				test += 1
+
+		# Increment animations and reset at strip end
+		br13 += 1
+		br2 += 1
+		brw += 1
+		if (br13 > 17): br13 = 0
+		if (br2 > 48): br2 = 0
+		if (brw > 41): brw = 0
+
 		pixels.show()
-		if (test >= 1): test = 0
+		time.sleep(0.03)
 
 def threader():
 	while True:
