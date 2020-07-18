@@ -106,13 +106,19 @@ def police():
 		segments = 8	# number of segments to create (switch cases will have to be altered)
 		leftover = pixelCount % segments
 		count = 0
+
+		test = 0
+
+		# Divide the strip into segments
 		for i in range(0, segments):
 			stripSize = (pixelCount/segments)
 			if (i < leftover):
 				stripSize += 1
 			for j in range(0, int(stripSize)):
+				# Fill each segment
 				if (i == 0):
-					with pixelLock: pixels[count] = (255, 0, 0)
+					if (test == 0): with pixelLock: pixels[count] = (255, 0, 0)
+					elif (test == 1): with pixelLock: pixels[coutn] = (255, 255, 255)
 				elif (i == 1):
 						with pixelLock: pixels[count] = (0, 0, 255)
 				elif (i == 2):
@@ -128,7 +134,9 @@ def police():
 				elif (i == 7):
 					with pixelLock: pixels[count] = (0, 0, 255)
 				count += 1
+				test += 1
 		pixels.show()
+		if (test >= 1): test = 0
 
 def threader():
 	while True:
