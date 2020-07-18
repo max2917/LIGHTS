@@ -117,8 +117,10 @@ def police():
 			for j in range(0, int(stripSize)):
 				# Fill each segment
 				if (i == 0):
-					if (test == 0): with pixelLock: pixels[count] = (255, 0, 0)
-					elif (test == 1): with pixelLock: pixels[coutn] = (255, 255, 255)
+					if (test == 0):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					elif (test == 1):
+						with pixelLock: pixels[count] = (255, 255, 255)
 				elif (i == 1):
 						with pixelLock: pixels[count] = (0, 0, 255)
 				elif (i == 2):
