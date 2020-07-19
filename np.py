@@ -114,6 +114,7 @@ def police():
 
 		# Divide the strip into segments
 		for i in range(0, segments):
+			if (animate == False): break
 			stripSize = (pixelCount/segments)
 			if (i < leftover):
 				stripSize += 1
@@ -171,8 +172,85 @@ def police():
 		pixels.show()
 		time.sleep(0.03)
 
+def fire():
+
+	h = 0 # Animation counter
+
+	while (animate == True):
+		segments = 10	# number of segments to create (switch cases will have to be altered)
+		leftover = pixelCount % segments
+		count = 0
+
+		# Divide the strip into segments
+		for i in range(0, segments):
+			if (animate == False): break
+			stripSize = (pixelCount/segments)
+			if (i < leftover):
+				stripSize += 1
+
+			for j in range(0, int(stripSize)):
+				# Fill each segment
+				if (i == 0):
+					if (h == 5 or (h >= 7 and h <= 12) or h == 23 or h == 25 or h == 27 or (h >= 29 and h <= 31) or h == 42 or (h >= 44 and h <= 49) or h == 59 or h == 61 or h == 63 or (h >= 65 and h <= 68)):						
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 1):
+					if (h == 3 or h == 5 or h == 7 or (h >= 9 and h <= 11) or (h >= 22 and h <= 29) or h == 40 or h == 42 or h == 44 or (h >= 46 and h <= 48) or h == 58 or h == 60 or h == 62 or (h >= 64 and h <=66)):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 2):
+					if (h == 5 or h == 7 or h == 9 or (h >= 11 and h <= 13) or h == 23 or h == 25 or h == 27 or (h >= 29 and h <= 31) or h == 42 or h == 44 or h == 46 or (h >= 48 and h <= 50) or h == 60 or (h >= 62 and h <= 68)):
+						with pixelLock: pixels[count] = (255, 255, 255)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 3):
+					if (h == 5 or h == 7 or h == 9 or h == 11 or h == 12 or h == 23 or h == 25 or h == 27 or (h >=29 and h <= 31) or h == 42 or h == 44 or h == 46 or h == 48 or h == 49 or h == 59 or h == 61 or h == 63 or (h >= 65 and h <= 68)):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 4):
+					if (h == 0 or h == 2 or h == 4 or (h >= 6 and h <= 8) or h == 18 or h == 20 or h == 22 or (h >= 24 and h <= 27) or h == 37 or h == 39 or h == 41 or (h >= 43 and h <= 45) or (h >= 55 and h <= 58) or (h >= 60 and h <= 63)):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 5):
+					if ((h >= 9 and h <= 12) or (h >= 14 and h <= 17) or h == 27 or h == 29 or h == 31 or (h >= 33 and h <= 35) or h == 45 or h == 47 or h == 49 or (h >= 51 and h <= 54) or h == 64 or h == 66 or h == 68 or (h >= 70 and h <= 72)):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 6):
+					if (h == 0 or h == 2 or h == 3 or h == 13 or h == 15 or h == 17 or (h >= 19 and h <= 22) or h == 32 or h == 34 or h == 36  or h == 38 or h == 39 or h == 50 or h == 52 or h == 53 or h == 54 or (h >= 56 and h <= 58) or h == 69 or h == 71):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 7):
+					if (h == 0 or (h >= 2 and h <= 4) or h == 14 or (h >= 16 and h <= 22) or h == 32 or h == 34 or h == 36 or (h >= 38 and h <= 40) or h == 50 or h == 52 or h == 54 or (h >= 56 and h <=58) or h == 69 or h == 71):
+						with pixelLock: pixels[count] = (255, 255, 255)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 8):
+					if ((h >=0 and h <= 2) or h == 12 or h == 14 or h == 16 or (h >= 18 and h <= 20) or h == 30 or h == 32 or h == 34 or (h >= 36 and h <= 38) or (h >= 49 and h <= 56) or h == 67 or h == 69 or h == 71):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				elif (i == 9):
+					if ((h >= 0 and h <= 3) or h == 13 or h == 15 or h == 17 or (h >= 19 and h <= 22) or h == 32 or (h >= 34 and h <= 39) or h == 50 or h == 52 or h == 54 or (h >= 56 and h <= 58) or h == 69 or h == 71 or h == 72):
+						with pixelLock: pixels[count] = (255, 0, 0)
+					else:
+						with pixelLock: pixels[count] = (0, 0, 0)
+				count += 1
+
+		# Increment animations and reset at strip end
+		h += 1
+		if (h > 72): h = 0
+
+		pixels.show()
+		time.sleep(0.03)
+
 def threader():
-	while True:
+	while (True):
 		# Get params for this thread
 		params = q.get()
 		# Check animation type in params
@@ -192,7 +270,7 @@ def threader():
 			police()
 			q.taks_done()
 		elif (params[0] == "fire"):
-			#fire()
+			fire()
 			q.task_done()
 
 q = Queue()
