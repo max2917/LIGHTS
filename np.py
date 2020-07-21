@@ -29,7 +29,7 @@ def rainbowChase():
 				if (i <= (pixelCount*10)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*10), 1, 1)
 				with pixelLock: pixels[int(i/10)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 		pixels.show()
-#		time.sleep(0.05)
+		#time.sleep(0.05)
 		if (offset < (pixelCount*10)): offset += 1
 		else: offset = 0
 
@@ -291,7 +291,7 @@ while True:
 				if data:
 					# Up to 4 parameters, d[0] is identifier flag
 					d = data.decode("utf-8").split(',', 4)
-					print("***** Type and values received: ",d[0], d[1], d[2], d[3], "*****")
+					print("***** Received: ",d[0], d[1], d[2], d[3], "*****")
 
 					if (previousButton == d[0]):
 						# If the same button is pressed twice, do nothing
@@ -314,8 +314,8 @@ while True:
 						#  computationally expensive or fragile. It also simplifies
 						#  the network packets to do it this way.
 						previousButton = "none"
-					elif (d[0] == "rainbow"):
-						print("previous button", d[0])
+					elif (d[0] == "rainbow" or d[0] == "rainbowChase" or d[0] == "strobe"):
+						# Animations with a speed option
 						previousButton = d[0]
 						animate = False
 						time.sleep(0.01)
@@ -326,18 +326,8 @@ while True:
 						t.start()
 						params = [d[0], d[1]] # Name and speed of animation
 						q.put(params)
-					elif (d[0] == "rainbowChase"):
-						previousButton = d[0]
-						animate = False
-						time.sleep(0.01)
-						animate = True
-
-						t = threading.Thread(target = threader)
-						t.daemon = True
-						t.start()
-						params = [d[0], d[1]] # Name and speed of animation
-						q.put(params)
-					elif (d[0] == "pride"):
+					else:
+						# Animations that don't have any user options
 						previousButton = d[0]
 						animate = False
 						time.sleep(0.01)
@@ -347,37 +337,4 @@ while True:
 						t.daemon = True
 						t.start()
 						params = [d[0]] # Name and speed of animation
-						q.put(params)
-					elif (d[0] == "strobe"):
-						previousButton = d[0]
-						animate = False
-						time.sleep(0.01)
-						animate = True
-
-						t = threading.Thread(target = threader)
-						t.daemon = True
-						t.start()
-						params = [d[0]]
-						q.put(params)
-					elif (d[0] == "fire"):
-						previousButton = d[0]
-						animate = False
-						time.sleep(0.01)
-						animate = True
-
-						t = threading.Thread(target = threader)
-						t.daemon = True
-						t.start()
-						params = [d[0]]
-						q.put(params)
-					elif (d[0] == "police"):
-						previousButton = d[0]
-						animate = False
-						time.sleep(0.01)
-						animate = True
-
-						t = threading.Thread(target = threader)
-						t.daemon = True
-						t.start()
-						params = [d[0]]
 						q.put(params)
