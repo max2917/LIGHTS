@@ -3,14 +3,6 @@
 if (isset($_GET['mode']) and isset($_GET['red']) and isset($_GET['green']) and isset($_GET['blue'])) {
 	send_color($_GET['mode'], $_GET['red'], $_GET['green'], $_GET['blue']);
 }
-elseif (isset($_GET['mode'])) {
-	if     ($_GET['mode'] == "rainbow")			{ send_color("rainbow", "0", "0", "0"); }
-	elseif ($_GET['mode'] == "pride")			{ send_color("pride", "0", "0", "0"); }
-	elseif ($_GET['mode'] == "strobe")			{ send_color("strobe", "0", "0", "0"); }
-	elseif ($_GET['mode'] == "rainbowChase")	{ send_color("rainbowChase", "0", "0", "0"); }
-	elseif ($_GET['mode'] == "fire")			{ send_color("fire", "0", "0", "0"); }
-	elseif ($_GET['mode'] == "police")			{ send_color("police", "0", "0", "0"); }
-}
 else {
 	send_color("error", 0, 1, 0);
 	echo("PHP socket error\n");

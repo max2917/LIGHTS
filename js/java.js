@@ -1,5 +1,6 @@
 
-// Send XMLHttpRequest to update light strip
+// Send XMLHttpRequest to update light strip via php
+// Input: param in format "mode=someMode&red=int&green=int&blue=int"
 function request(param) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "handler.php?"+param, true);
@@ -9,23 +10,19 @@ function request(param) {
 // Set entire light strip to a static color
 // Inputs: R, G, B as 0...255
 function static(r, g, b) {
-	//var xhr = new XMLHttpRequest();
-	//xhr.open("GET", "handler.php?red="+r+"&green="+g+"&blue="+b, true);
-	//xhr.send();
-    console.log("static");
 
-    // Hide animation speed slider if a static option is selected
+    // Hide animation speed slider because a static option is selected
     var t = document.getElementById("animationSpeedSlider");
     if (!t.classList.contains("hide")) {
         t.classList.add("hide");
     }
 	
 	// Dynamically update the state of the sliders before sending
-	let hSlider	= document.getElementById("hSlide");
+	let hSlider	= document.getElementById("hSlide");    // Get sliders
 	let sSlider	= document.getElementById("sSlide");
 	let vSlider	= document.getElementById("vSlide");
-	let HSV = RGBtoHSV(r, g, b);
-	hSlider.value = `${HSV.h}`;
+	let HSV = RGBtoHSV(r, g, b);                        // Convert values to HSV
+	hSlider.value = `${HSV.h}`;                         // Set new slier positions
 	sSlider.value = `${HSV.s}`;
 	vSlider.value = `${HSV.v}`;
 	
@@ -35,21 +32,26 @@ function static(r, g, b) {
 	//  variable in style.css
 	hSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(sSlider.value/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(vSlider.value/100))})`;
 	sSlider.style.background = `linear-gradient(to right, white, rgb(${r}, ${g}, ${b}))`;
-	vSlider.style.background = `linear-gradient(to right, black, rgb(${r}, ${g}, ${b}))`;
+    vSlider.style.background = `linear-gradient(to right, black, rgb(${r}, ${g}, ${b}))`;
+    
+    // Send request
 	request("mode=static"+"&red="+r+"&green="+g+"&blue="+b);
 };
 
 // Set light strip to some animated mode
 function animate(mode) {
 
-    // Show animation speed slider if an animation is selected
+    // Show animation speed slider because an animation is selected
     var t = document.getElementById("animationSpeedSlider");
     if (t.classList.contains("hide")) {
         t.classList.remove("hide");
     }
 
+    // Send request with empty values for red, green, and blue
+    request("mode="+mode+"&red=0&green=0&blue=0");
+
 	console.log("ANIMATE\t", mode);
-	request("mode="+mode);
+	
 };
 
 // Update light strip based on slider states
@@ -60,18 +62,15 @@ function sliderUpdate(h, s, v) {
 };
 
 // Convert HSV inputs to RGB
+// Inputs: h [0, 360], s, v [0, 1]
+// Output: r, g, b [0, 255]
 function HSVtoRGB(h, s, v) {
-	console.log("HSVtoRGB:\t", h, s, v);
-	// Inputs: h [0, 360], s, v [0, 1]
-	// Output: r, g, b [0, 255]
-	
 	let f = (n, k = (n+h/60)%6) => v - v*s*Math.max(Math.min(k, 4-k, 1), 0);
-	
 	return { r: 255*f(5), g: 255*f(3), b: 255*f(1) }
 };
 
 // Covert RGB inputs to HSV
-function RGBtoHSV( r, g, b ) {
+function RGBtoHSV(r, g, b) {
     let rabs, gabs, babs, rr, gg, bb, h, s, v, diff, diffc, percentRoundFn;
     rabs = r / 255;
     gabs = g / 255;

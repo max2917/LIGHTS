@@ -38,7 +38,7 @@
 				<button type="button" class="buttonAnimation buttonFire" onclick="javascript:animateHTML('fire')">Fire</button>
 			</div>
 			<div class="animationSpeedRow">
-				<input type="range" min="0" max="10" class="animationSpeedSliderShowHide slider sliderSV sliderAnimationSpeed" id="animationSpeedSlider">
+				<input type="range" min="0" max="50" class="animationSpeedSliderShowHide slider sliderSV sliderAnimationSpeed" id="animationSpeedSlider">
 			</div>
 		</section>
 		
@@ -138,10 +138,13 @@
 			let hSlider	= document.getElementById("hSlide");
 			let sSlider	= document.getElementById("sSlide");
 			let vSlider	= document.getElementById("vSlide");
-			
 			hSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
 			sSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
 			vSlider.oninput	= function() { javascript:sliderUpdate(hSlider.value, sSlider.value, vSlider.value); }
+
+			// Forward animation speed adjustments
+			let animSlider = document.getElementById("animationSpeedSlider");
+			animSlider.oninput = function() { javascript:animateHTML(animSlider.value); }
 			
 		</script>
 		
