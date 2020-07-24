@@ -316,6 +316,7 @@ while True:
 						previousButton = "none"
 					elif (d[0] == "rainbow" or d[0] == "rainbowChase" or d[0] == "strobe"):
 						# Animations with a speed option
+						print("ANIMATE WITH SPEED ", d[1])
 						previousButton = d[0]
 						animate = False
 						time.sleep(0.01)

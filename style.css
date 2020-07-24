@@ -339,10 +339,17 @@ button {
 
 			var(--offWhite) 99%
 		);
-	height: calc(var(--sliderHeight)/2);
 }
-.slider:hover {
-	/*opacity: 1; /* Fully shown on mouse-over */
+.animationSpeedSliderShowHide {
+	/* The order these are applied in HTML matters */
+	/* Used to show hide animation slider with animation */
+	height:		calc(var(--sliderHeight)/2);
+	opacity:	1;
+	transition:	opacity 0.33s, height 0.33s;
+}
+.animationSpeedSliderShowHide.hide {
+	opacity:	0;
+	height:		0px;
 }
 .sliderSV::-webkit-slider-thumb {
 	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
