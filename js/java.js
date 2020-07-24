@@ -26,7 +26,7 @@ function static(r, g, b) {
 	sSlider.value = `${HSV.s}`;
 	vSlider.value = `${HSV.v}`;
 	
-    // Calculate adjusted RGB for SV slider gradients
+    // Calculate adjusted RGB for SV slider gradients to preserve 100% S and V
     let adjRGB = HSVtoRGB(HSV.h, 1, 1);
 	sSlider.style.background = `linear-gradient(to right, white, rgb(${adjRGB.r}, ${adjRGB.g}, ${adjRGB.b}))`;
     vSlider.style.background = `linear-gradient(to right, black, rgb(${adjRGB.r}, ${adjRGB.g}, ${adjRGB.b}))`;
@@ -35,7 +35,7 @@ function static(r, g, b) {
     // black panel with V controlled transparency
 	// NOTE: hSlider.style must be updated to be equal to the buttonHeight
     //  variable in style.css
-    let lightness = 50+(sSlider.value/2);
+    let lightness = 50+(sSlider.value/2);   // S and V adjusted to prevent full wash/blackout of slider colors
     let brightness = 50+(vSlider.value/2);
     hSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
     sSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
@@ -54,8 +54,12 @@ function animate(mode) {
         t.classList.remove("hide");
     }
 
-    // Send request with empty values for red, green, and blue
-    request("mode="+mode+"&red=0&green=0&blue=0");
+    if (isNaN(mode)) {
+        // Send request with empty values for red, green, and blue
+        request("mode="+mode+"&red=0&green=0&blue=0");
+    } else {
+        request("mode=speed"+"&red="+mode+"&green=0&blue=0");
+    }
 
 	console.log("ANIMATE\t", mode);
 	

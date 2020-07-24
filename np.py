@@ -11,6 +11,7 @@ previousButton = "none"
 pixelCount = 150
 pixels = neopixel.NeoPixel(board.D18, pixelCount, auto_write = False)
 animate = False
+animationSpeed = 25
 
 pixelLock = threading.Lock()
 rainbowSched = sched.scheduler()
@@ -22,15 +23,16 @@ def rainbowChase():
 	# the for loop is using j to paint the rainbow across the strip with i offset
 	offset = 0
 	while (animate == True):
-		for i in range(0, pixelCount*10):
+		speedScale = animationSpeed
+		speedScale = int(speedScale)
+		for i in range(0, pixelCount*speedScale):
 			# Loop through the entire strip to fill it with the current rainbow state
 			if (animate == False): break
-			if ((i % 10) == 0):
-				if (i <= (pixelCount*10)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*10), 1, 1)
-				with pixelLock: pixels[int(i/10)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
+			if ((i % speedScale) == 0):
+				if (i <= (pixelCount*speedScale)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*speedScale), 1, 1)
+				with pixelLock: pixels[int(i/speedScale)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 		pixels.show()
-		#time.sleep(0.05)
-		if (offset < (pixelCount*10)): offset += 1
+		if (offset < (pixelCount*speedScale)): offset += 1
 		else: offset = 0
 
 rainbowHue = 0
@@ -312,7 +314,7 @@ while True:
 					if (previousButton == d[0]):
 						# If the same button is pressed twice, do nothing
 						break
-					elif (threading.activeCount() > 1):
+					elif (threading.activeCount() > 1 and d[0] != "speed"):
 						# Else, switching mode, stop any threads
 						#print("ACTIVE THREADS")
 						#threads = threading.enumerate()	# Get list of active threads
@@ -330,9 +332,13 @@ while True:
 						#  computationally expensive or fragile. It also simplifies
 						#  the network packets to do it this way.
 						previousButton = "none"
+					elif (d[0] == "speed"):
+						# Handle speed adjustemnt for animations
+						print("Animation speed change: ", d[1])
+						animationSpeed = d[1]
 					else:
 						# Slection was an animation/function more complex than 'static'
-						
+
 						# Set new previous button
 						previousButton = d[0]
 
