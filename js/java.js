@@ -26,13 +26,20 @@ function static(r, g, b) {
 	sSlider.value = `${HSV.s}`;
 	vSlider.value = `${HSV.v}`;
 	
-	// white panel with S controlled transparency and a black pannel with
-	//  V controlled transparency to H slider
+    // Calculate adjusted RGB for SV slider gradients
+    let adjRGB = HSVtoRGB(HSV.h, 1, 1);
+	sSlider.style.background = `linear-gradient(to right, white, rgb(${adjRGB.r}, ${adjRGB.g}, ${adjRGB.b}))`;
+    vSlider.style.background = `linear-gradient(to right, black, rgb(${adjRGB.r}, ${adjRGB.g}, ${adjRGB.b}))`;
+
+    // white panel with S controlled transparency
+    // black panel with V controlled transparency
 	// NOTE: hSlider.style must be updated to be equal to the buttonHeight
-	//  variable in style.css
-	hSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(sSlider.value/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(vSlider.value/100))})`;
-	sSlider.style.background = `linear-gradient(to right, white, rgb(${r}, ${g}, ${b}))`;
-    vSlider.style.background = `linear-gradient(to right, black, rgb(${r}, ${g}, ${b}))`;
+    //  variable in style.css
+    let lightness = 50+(sSlider.value/2);
+    let brightness = 50+(vSlider.value/2);
+    hSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
+    sSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
+    vSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
     
     // Send request
 	request("mode=static"+"&red="+r+"&green="+g+"&blue="+b);

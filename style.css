@@ -255,20 +255,20 @@ button {
 	/* Generate rainbow background */
 	background: linear-gradient(
 		to right,
-		red,
-		yellow,
-		green,
-		cyan,
-		blue,
-		violet,
-		red
+		#ff0000,
+		#ffff00,
+		#00ff00,
+		#00ffff,
+		#0000ff,
+		#ff00ff,
+		#ff0000
 	);
 }
 .sliderS {
 	background: linear-gradient(
 		to right,
 		white,
-		rgb(0, 255, 255)
+		#00ffff
 	);
 	height: calc(var(--sliderHeight)/2);
 }
@@ -276,7 +276,7 @@ button {
 	background: linear-gradient(
 		to right,
 		black,
-		rgb(0, 255, 255)
+		#00ffff
 	);
 	height: calc(var(--sliderHeight)/2);
 }
