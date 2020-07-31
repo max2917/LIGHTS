@@ -8,7 +8,7 @@ import sched
 from queue import Queue
 
 previousButton = "none"
-pixelCount = 150
+pixelCount = 82
 pixels = neopixel.NeoPixel(board.D18, pixelCount, auto_write = False)
 animate = False
 animationSpeed = 25
@@ -80,7 +80,7 @@ def pride():
 			stripSize += 1
 		for j in range(0, int(stripSize)):
 			if (currSegment == 0):
-				with pixelLock: pixels[pixelIndex] = (250, 3, 3)
+				with pixelLock: pixels[pixelIndex] = (250, 0, 0)
 			elif (currSegment == 1):
 				with pixelLock: pixels[pixelIndex] = (255, 25, 0)
 			elif (currSegment == 2):
@@ -108,9 +108,7 @@ def strobe():
 # Police car lighting effect
 def police():
 
-	br13 = 0
-	br2 = 0
-	brw = 0
+	animationIndex = 0	# Animation counter
 
 	while (animate == True):
 		segments = 8						# number of segments to create
@@ -120,64 +118,73 @@ def police():
 		# Divide the strip into segments
 		for currSegment in range(0, segments):
 
-			# Cancel animation
+			# cancel animation
 			if (animate == False): break
 
-			# Calculate stripSize and adjust segments for rounding error
+			# account for rounding error
 			stripSize = (pixelCount/segments)
 			if (currSegment < leftover):
 				stripSize += 1
 
 			for j in range(0, int(stripSize)):
 				# Fill each segment
-				if (currSegment == 0 or currSegment == 3):
-					# RED 1, 3
-					if (br13 == 2 or br13 == 8 or br13 == 11 or br13 == 14 or br13 == 17):
+				if (currSegment == 0):
+					if ((animationIndex >= 0 and animationIndex <= 4) or (animationIndex >= 27 and animationIndex <= 30) or (animationIndex >= 32 and animationIndex <= 35) or animationIndex == 68 or animationIndex == 70):
 						with pixelLock: pixels[pixelIndex] = (255, 0, 0)
-					else:
-						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
-				elif (currSegment == 1):
-					# RED 2
-					# 12 on, 2 off, 1 on, 8 off, 1 on, 2 off, 9 on, 14 off
-					if (br2 <= 11 or br2 == 14 or br2 == 23 or (br2 >= 26 and br2 <= 35) or br2 == 38 or br2 == 45):
-						with pixelLock: pixels[pixelIndex] = (255, 0, 0)
-					else:
-						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
-				elif (currSegment == 2 or currSegment == 5):
-					# WHITE R, B
-					# 6R, 6B, 6R, 6B, 9R, 9B
-					if ((brw >= 0 and brw <=5) or (brw >= 12 and brw <= 17) or (brw >= 24 and brw <= 32)):
-						if (currSegment ==2):
-							with pixelLock: pixels[pixelIndex] = (255, 255, 255)
-						if (currSegment == 5):
-							with pixelLock: pixels[pixelIndex] = (0, 0, 0)
-					else:
-						if (currSegment ==2):
-							with pixelLock: pixels[pixelIndex] = (0, 0, 0)
-						if (currSegment == 5):
-							with pixelLock: pixels[pixelIndex] = (255, 255, 255)
-				elif (currSegment == 4 or currSegment == 7):
-					# BLUE 1, 3
-					if (br13 == 6 or br13 == 12 or br13 == 15 or br13 == 18 or br13 == 3):
+					elif (animationIndex == 10 or (animationIndex >= 12 and animationIndex <= 14) or animationIndex == 16 or animationIndex == 18 or (animationIndex >= 20 and animationIndex <= 22) or animationIndex == 45 or animationIndex == 46 or animationIndex == 49 or animationIndex == 51 or (animationIndex >= 53 and animationIndex <= 56)):
 						with pixelLock: pixels[pixelIndex] = (0, 0, 255)
 					else:
 						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+				elif (currSegment == 1):
+					if (animationIndex == 0 or animationIndex == 2 or animationIndex == 3 or animationIndex == 31 or animationIndex == 33 or animationIndex == 35 or (animationIndex >= 37 and animationIndex <= 40) or animationIndex == 66 or animationIndex == 68 or animationIndex == 70):
+						with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+					elif (animationIndex == 9 or animationIndex == 11 or animationIndex == 15 or (animationIndex >= 18 and animationIndex <= 20) or animationIndex == 48 or animationIndex == 50 or animationIndex == 52 or animationIndex == 54 or animationIndex == 56 or animationIndex == 57):
+						with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+					else:
+						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+				elif (currSegment == 2):
+					if (animationIndex == 0 or (animationIndex >= 2 and animationIndex <= 4) or animationIndex == 10 or animationIndex == 12 or animationIndex == 14 or (animationIndex >= 16 and animationIndex <= 19) or animationIndex == 32 or (animationIndex >= 34 and animationIndex <= 40) or animationIndex == 50 or animationIndex == 52 or animationIndex == 54 or (animationIndex >= 56 and animationIndex <= 58) or animationIndex == 68 or animationIndex == 70):
+						with pixelLock: pixels[pixelIndex] = (255, 255, 255)
+					else:
+						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+				elif (currSegment == 3):
+					if (animationIndex == 30 or animationIndex == 32 or animationIndex == 34 or animationIndex == 36 or animationIndex == 38 or animationIndex == 40 or animationIndex == 63 or animationIndex == 65 or animationIndex == 67 or (animationIndex >= 69 and animationIndex <= 71)):
+						with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+					elif (animationIndex == 12 or animationIndex == 14 or (animationIndex >= 16 and animationIndex <= 18) or animationIndex == 20 or animationIndex == 47 or animationIndex == 49 or animationIndex == 51 or (animationIndex >= 53 and animationIndex <= 55)):
+						with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+					else:
+						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+				elif (currSegment == 4):
+					if (animationIndex == 2 or animationIndex == 4 or animationIndex == 6 or (animationIndex >= 8 and animationIndex <= 10) or animationIndex == 39 or animationIndex == 41 or (animationIndex >= 43 and animationIndex <= 45)):
+						with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+					elif (animationIndex == 18 or animationIndex == 20 or animationIndex == 22 or (animationIndex >= 24 and animationIndex <= 26) or animationIndex == 57 or animationIndex == 59 or animationIndex == 61 or animationIndex == 63 or animationIndex == 65 or animationIndex == 67):
+						with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+					else:
+						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+				elif (currSegment == 5):
+					if (animationIndex == 5 or animationIndex == 7 or animationIndex == 9 or (animationIndex >= 11 and animationIndex <= 13) or animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or (animationIndex >= 29 and animationIndex <= 31) or animationIndex == 37 or animationIndex == 39 or animationIndex == 41 or (animationIndex >= 43 and animationIndex <= 46) or animationIndex == 59 or (animationIndex >= 61 and animationIndex <= 67)):
+						with pixelLock: pixels[pixelIndex] = (255, 255, 255)
+					else:
+						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
 				elif (currSegment == 6):
-					# BLUE 2, Same as RED 2 with offset
-					# 12 on, 2 off, 1 on, 8 off, 1 on, 2 off, 9 on, 14 off
-					if ((br2 >= 11 and br2 <= 23) or br2 == 26 or br2 == 35 or (br2 >= 38 and br2 <= 47) or br2 == 1 or br2 == 8):
+					if (animationIndex == 3 or animationIndex == 5 or animationIndex == 7 or animationIndex == 9 or animationIndex == 11 or animationIndex == 12 or animationIndex == 36 or animationIndex == 38 or animationIndex == 42 or (animationIndex >= 45 and animationIndex <= 47) ):
+						with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+					elif (animationIndex == 21 or animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or animationIndex == 29 or animationIndex == 30 or animationIndex == 58 or animationIndex == 60 or animationIndex == 62 or (animationIndex >= 64 and animationIndex <= 67)):
+						with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+					else:
+						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+				elif (currSegment == 7):
+					if (animationIndex == 0 or animationIndex == 1 or animationIndex == 4 or animationIndex == 6 or (animationIndex >= 8 and animationIndex <= 11) or animationIndex == 37 or (animationIndex >= 39 and animationIndex <= 41) or animationIndex == 43 or animationIndex == 45 or (animationIndex >= 47 and animationIndex <= 49) ):
+						with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+					elif (animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or (animationIndex >= 27 and animationIndex <= 31) or (animationIndex >= 54 and animationIndex <= 57) or (animationIndex >= 59 and animationIndex <= 62)):
 						with pixelLock: pixels[pixelIndex] = (0, 0, 255)
 					else:
 						with pixelLock: pixels[pixelIndex] = (0, 0, 0)
 				pixelIndex += 1
 
-		# Increment animations and reset at strip end
-		br13 += 1
-		br2 += 1
-		brw += 1
-		if (br13 > 17): br13 = 0
-		if (br2 > 48): br2 = 0
-		if (brw > 41): brw = 0
+		# Increment animations and loop
+		animationIndex += 1
+		if (animationIndex > 71): animationIndex = 0
 
 		pixels.show()
 		time.sleep(0.03)
