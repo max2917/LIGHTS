@@ -31,6 +31,7 @@ def control():
 
 		# Fill with static color
 		if (state == "static"):
+			# Pride is dependent on this method of rejectiong unnecessary updates
 			if (param1 != prevStatic[0] or param2 != prevStatic[1] or param3 != prevStatic[2]):
 				with pixelLock: pixels.fill((param1, param2, param3))
 				prevStatic = (param1, param2, param3)
@@ -76,11 +77,14 @@ def control():
 		# Fill strip with pride flag
 		elif (state == "pride"):
 			# Prevent Pride from constantly refersheing the strip as it paints a "static" image
+			# set state to static to utilize it's rejection properties
 			# prevStatic is set to an invalid input and thus cannot be equal to a previously
-			#  received input for static meaning the strip will never attempt to update with
-			#  the invalid color
-			# State is set to static so the loop will use static's unnecessary refresh rejection
-			#  while preventing the loop from reentering this block unnecessarily
+			#  received input for static, current state is set to static, and param1, 2, and 3
+			#  are set to the same invalid input to prevent static from attempting to write them
+			#  to the lights.
+			param1 = 256
+			param2 = 256
+			param3 = 256
 			prevStatic = (256, 256, 256)
 			state = "static"
 
