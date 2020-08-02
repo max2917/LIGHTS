@@ -27,7 +27,6 @@ def control():
 	global state, param1, param2, param3
 	prevStatic = (param1, param2, param3)
 	while True:
-		print("* ", state, " ", param1, " ", param2, " ", param3)
 
 		# Fill with static color
 		if (state == "static"):
@@ -48,9 +47,10 @@ def control():
 		# Animate entire strip through rainbow
 		elif (state == "rainbow"):
 			# Animate entire bar (with fill) through the rainbow at speed in seconds
-			for hueIndex in range(0, 100):
-				if (state != "rainbow"): continue
-				rgb = colorsys.hsv_to_rgb(hueIndex/100, 1, 1)
+			hueScale = (param1+1)*100
+			for hueIndex in range(0, hueScale):
+				if (state != "rainbow" or hueScale != ((param1+1)*100)): continue
+				rgb = colorsys.hsv_to_rgb(hueIndex/hueScale, 1, 1)
 				pixels.fill((int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2])))
 				pixels.show()
 
@@ -62,7 +62,7 @@ def control():
 			# the for loop is using j to paint the rainbow across the strip with i offset
 			offset = 0
 			while (state == "rainbowChase"):
-				speedScale = 15#param1
+				speedScale = param1
 				speedScale = int(speedScale)
 				for i in range(0, pixelCount*speedScale):
 					# Loop through the entire strip to fill it with the current rainbow state
@@ -304,7 +304,9 @@ while True:
 				if data:
 					# Up to 4 parameters, d[0] is identifier flag
 					d = data.decode("utf-8").split(',', 4)
-					state = d[0]
+					
+					if (d[0] != "speed"):
+						state = d[0]
 					param1 = int(float(d[1]))
 					param2 = int(float(d[2]))
 					param3 = int(float(d[3]))

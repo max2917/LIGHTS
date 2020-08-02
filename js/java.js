@@ -49,14 +49,14 @@ function static(r, g, b) {
 function animate(mode) {
 
     // Show animation speed slider because an animation is selected
-    var t = document.getElementById("animationSpeedSlider");
-    if (t.classList.contains("hide")) {
-        t.classList.remove("hide");
+    var speedSlider = document.getElementById("animationSpeedSlider");
+    if (speedSlider.classList.contains("hide")) {
+        speedSlider.classList.remove("hide");
     }
 
     if (isNaN(mode)) {
-        // Send request with empty values for red, green, and blue
-        request("mode="+mode+"&red=0&green=0&blue=0");
+        // Send request with empty values for green, and blue with speed value in red
+        request("mode="+mode+"&red="+speedSlider.value+"&green=0&blue=0");
     } else {
         request("mode=speed"+"&red="+mode+"&green=0&blue=0");
     }
