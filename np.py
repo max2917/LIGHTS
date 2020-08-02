@@ -27,11 +27,12 @@ def control():
 	global state, param1, param2, param3
 	prevStatic = (param1, param2, param3)
 	while True:
+		print("* ", state, " ", param1, " ", param2, " ", param3)
 
 		# Fill with static color
 		if (state == "static"):
 			if (param1 != prevStatic[0] or param2 != prevStatic[1] or param3 != prevStatic[2]):
-				with pixelLock: pixels.fill((int(float(param1)), int(float(param2)), int(float(param3))))
+				with pixelLock: pixels.fill((param1, param2, param3))
 				prevStatic = (param1, param2, param3)
 				pixels.show()
 
@@ -47,7 +48,7 @@ def control():
 		elif (state == "rainbow"):
 			# Animate entire bar (with fill) through the rainbow at speed in seconds
 			for hueIndex in range(0, 100):
-				if (state != "rainbow"): break
+				if (state != "rainbow"): continue
 				rgb = colorsys.hsv_to_rgb(hueIndex/100, 1, 1)
 				pixels.fill((int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2])))
 				pixels.show()
@@ -60,11 +61,11 @@ def control():
 			# the for loop is using j to paint the rainbow across the strip with i offset
 			offset = 0
 			while (state == "rainbowChase"):
-				speedScale = param1
+				speedScale = 15#param1
 				speedScale = int(speedScale)
 				for i in range(0, pixelCount*speedScale):
 					# Loop through the entire strip to fill it with the current rainbow state
-					if (state != "rainbowChase"): break
+					if (state != "rainbowChase"): continue # Use continue, not break.
 					if ((i % speedScale) == 0):
 						if (i <= (pixelCount*speedScale)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*speedScale), 1, 1)
 						with pixelLock: pixels[int(i/speedScale)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
@@ -120,7 +121,7 @@ def control():
 				for currSegment in range(0, segments):
 
 					# cancel animation
-					if (state != "police"): break
+					if (state != "police"): continue
 
 					# account for rounding error
 					stripSize = (pixelCount/segments)
@@ -203,7 +204,7 @@ def control():
 				for currSegment in range(0, segments):
 
 					# cancel animation
-					if (state != "fire"): break
+					if (state != "fire"): continue
 
 					# account for rounding error
 					stripSize = (pixelCount/segments)
@@ -299,11 +300,11 @@ while True:
 				if data:
 					# Up to 4 parameters, d[0] is identifier flag
 					d = data.decode("utf-8").split(',', 4)
-					print("***** ",d[0], d[1], d[2], d[3], " *****")
 					state = d[0]
-					param1 = d[1]
-					param2 = d[2]
-					param3 = d[3]
+					param1 = int(float(d[1]))
+					param2 = int(float(d[2]))
+					param3 = int(float(d[3]))
+					print("***** ", state, " * ", param1, param2, param3, " *****")
 
 #					elif (threading.activeCount() > 1 and d[0] != "speed"):
 #						 Else, switching mode, stop any threads
