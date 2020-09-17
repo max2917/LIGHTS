@@ -19,6 +19,32 @@ state = "rainbowChase"
 param1 = 10
 param2 = 0
 param3 = 0
+STATIC = -1	# Used for mode setting in setColor
+
+gamma8 = [
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  2,  2,  2,  2,  2,  2,  2,
+    2,  3,  3,  3,  3,  3,  3,  3,  4,  4,  4,  4,  4,  5,  5,  5,
+    5,  6,  6,  6,  6,  7,  7,  7,  7,  8,  8,  8,  9,  9,  9, 10,
+   10, 10, 11, 11, 11, 12, 12, 13, 13, 13, 14, 14, 15, 15, 16, 16,
+   17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 24, 24, 25,
+   25, 26, 27, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35, 36,
+   37, 38, 39, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 50,
+   51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68,
+   69, 70, 72, 73, 74, 75, 77, 78, 79, 81, 82, 83, 85, 86, 87, 89,
+   90, 92, 93, 95, 96, 98, 99,101,102,104,105,107,109,110,112,114,
+  115,117,119,120,122,124,126,127,129,131,133,135,137,138,140,142,
+  144,146,148,150,152,154,156,158,160,162,164,167,169,171,173,175,
+  177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
+  215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 ]
+
+def setColor(r, g, b, i):
+	if (i == STATIC):
+		with pixelLock: pixels.fill((r, g, b))
+	else:
+		with pixelLock: pixels[i] = (gamma8[r], gamma8[g], gamma8[b])
+
 
 # Function on dedicated thread that communicated with lights direction
 #  communication is based on the state of 4 variables (state, param1,
@@ -32,16 +58,16 @@ def control():
 		if (state == "static"):
 			# Pride is dependent on this method of rejectiong unnecessary updates
 			if (param1 != prevStatic[0] or param2 != prevStatic[1] or param3 != prevStatic[2]):
-				with pixelLock: pixels.fill((param1, param2, param3))
+				setColor(param1, param2, param3, STATIC)
 				prevStatic = (param1, param2, param3)
 				pixels.show()
 
 		# Quick flashing white
 		elif (state == "strobe"):
-			with pixelLock: pixels.fill((0, 0, 0))
+			setColor(0, 0, 0, STATIC)
 			pixels.show()
 			time.sleep(0.1)
-			with pixelLock: pixels.fill((255, 255, 255))
+			setColor(255, 255, 255, STATIC)
 			pixels.show()
 
 		# Animate entire strip through rainbow
@@ -51,7 +77,7 @@ def control():
 			for hueIndex in range(0, hueScale):
 				if (state != "rainbow" or hueScale != ((param1+1)*100)): continue
 				rgb = colorsys.hsv_to_rgb(hueIndex/hueScale, 1, 1)
-				pixels.fill((int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2])))
+				setColor(int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]), STATIC)
 				pixels.show()
 
 		# Animate rainbow sliding across strip
@@ -69,7 +95,8 @@ def control():
 					if (state != "rainbowChase"): continue # Use continue, not break.
 					if ((i % speedScale) == 0):
 						if (i <= (pixelCount*speedScale)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*speedScale), 1, 1)
-						with pixelLock: pixels[int(i/speedScale)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
+						#with pixelLock: pixels[int(i/speedScale)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
+						setColor(int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]), int(i/speedScale))
 				pixels.show()
 				if (offset < (pixelCount*speedScale)): offset += 1
 				else: offset = 0
@@ -98,17 +125,17 @@ def control():
 					stripSize += 1
 				for j in range(0, int(stripSize)):
 					if (currSegment == 0):
-						with pixelLock: pixels[pixelIndex] = (250, 0, 0)
+						setColor(255, 0, 0, pixelIndex)
 					elif (currSegment == 1):
-						with pixelLock: pixels[pixelIndex] = (255, 25, 0)
+						setColor(255, 25, 0, pixelIndex)
 					elif (currSegment == 2):
-						with pixelLock: pixels[pixelIndex] = (255, 175, 0)
+						setColor(255, 175, 0, pixelIndex)
 					elif (currSegment == 3):
-						with pixelLock: pixels[pixelIndex] = (0, 255, 0)
+						setColor(0, 255, 0, pixelIndex)
 					elif (currSegment == 4):
-						with pixelLock: pixels[pixelIndex] = (0, 77, 255)
+						setColor(0, 77, 255, pixelIndex)
 					elif (currSegment == 5):
-						with pixelLock: pixels[pixelIndex] = (117, 7, 135)
+						setColor(117, 7, 135, pixelIndex)
 					pixelIndex += 1
 			pixels.show()
 
@@ -136,56 +163,56 @@ def control():
 						# Fill each segment
 						if (currSegment == 0):
 							if ((animationIndex >= 0 and animationIndex <= 4) or (animationIndex >= 27 and animationIndex <= 30) or (animationIndex >= 32 and animationIndex <= 35) or animationIndex == 68 or animationIndex == 70):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, STATIC)
 							elif (animationIndex == 10 or (animationIndex >= 12 and animationIndex <= 14) or animationIndex == 16 or animationIndex == 18 or (animationIndex >= 20 and animationIndex <= 22) or animationIndex == 45 or animationIndex == 46 or animationIndex == 49 or animationIndex == 51 or (animationIndex >= 53 and animationIndex <= 56)):
-								with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+								setColor(0, 0, 255, STATIC)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						elif (currSegment == 1):
 							if (animationIndex == 0 or animationIndex == 2 or animationIndex == 3 or animationIndex == 31 or animationIndex == 33 or animationIndex == 35 or (animationIndex >= 37 and animationIndex <= 40) or animationIndex == 66 or animationIndex == 68 or animationIndex == 70):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, STATIC)
 							elif (animationIndex == 9 or animationIndex == 11 or animationIndex == 15 or (animationIndex >= 18 and animationIndex <= 20) or animationIndex == 48 or animationIndex == 50 or animationIndex == 52 or animationIndex == 54 or animationIndex == 56 or animationIndex == 57):
-								with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+								setColor(0, 0, 255, STATIC)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						elif (currSegment == 2):
 							if (animationIndex == 0 or (animationIndex >= 2 and animationIndex <= 4) or animationIndex == 10 or animationIndex == 12 or animationIndex == 14 or (animationIndex >= 16 and animationIndex <= 19) or animationIndex == 32 or (animationIndex >= 34 and animationIndex <= 40) or animationIndex == 50 or animationIndex == 52 or animationIndex == 54 or (animationIndex >= 56 and animationIndex <= 58) or animationIndex == 68 or animationIndex == 70):
 								with pixelLock: pixels[pixelIndex] = (255, 255, 255)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						elif (currSegment == 3):
 							if (animationIndex == 30 or animationIndex == 32 or animationIndex == 34 or animationIndex == 36 or animationIndex == 38 or animationIndex == 40 or animationIndex == 63 or animationIndex == 65 or animationIndex == 67 or (animationIndex >= 69 and animationIndex <= 71)):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, STATIC)
 							elif (animationIndex == 12 or animationIndex == 14 or (animationIndex >= 16 and animationIndex <= 18) or animationIndex == 20 or animationIndex == 47 or animationIndex == 49 or animationIndex == 51 or (animationIndex >= 53 and animationIndex <= 55)):
-								with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+								setColor(0, 0, 255, STATIC)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						elif (currSegment == 4):
 							if (animationIndex == 2 or animationIndex == 4 or animationIndex == 6 or (animationIndex >= 8 and animationIndex <= 10) or animationIndex == 39 or animationIndex == 41 or (animationIndex >= 43 and animationIndex <= 45)):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, STATIC)
 							elif (animationIndex == 18 or animationIndex == 20 or animationIndex == 22 or (animationIndex >= 24 and animationIndex <= 26) or animationIndex == 57 or animationIndex == 59 or animationIndex == 61 or animationIndex == 63 or animationIndex == 65 or animationIndex == 67):
-								with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+								setColor(0, 0, 255, STATIC)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						elif (currSegment == 5):
 							if (animationIndex == 5 or animationIndex == 7 or animationIndex == 9 or (animationIndex >= 11 and animationIndex <= 13) or animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or (animationIndex >= 29 and animationIndex <= 31) or animationIndex == 37 or animationIndex == 39 or animationIndex == 41 or (animationIndex >= 43 and animationIndex <= 46) or animationIndex == 59 or (animationIndex >= 61 and animationIndex <= 67)):
-								with pixelLock: pixels[pixelIndex] = (255, 255, 255)
+								setColor(255, 255, 255, STATIC)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						elif (currSegment == 6):
 							if (animationIndex == 3 or animationIndex == 5 or animationIndex == 7 or animationIndex == 9 or animationIndex == 11 or animationIndex == 12 or animationIndex == 36 or animationIndex == 38 or animationIndex == 42 or (animationIndex >= 45 and animationIndex <= 47) ):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, STATIC)
 							elif (animationIndex == 21 or animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or animationIndex == 29 or animationIndex == 30 or animationIndex == 58 or animationIndex == 60 or animationIndex == 62 or (animationIndex >= 64 and animationIndex <= 67)):
-								with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+								setColor(0, 0, 255, STATIC)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						elif (currSegment == 7):
 							if (animationIndex == 0 or animationIndex == 1 or animationIndex == 4 or animationIndex == 6 or (animationIndex >= 8 and animationIndex <= 11) or animationIndex == 37 or (animationIndex >= 39 and animationIndex <= 41) or animationIndex == 43 or animationIndex == 45 or (animationIndex >= 47 and animationIndex <= 49) ):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, STATIC)
 							elif (animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or (animationIndex >= 27 and animationIndex <= 31) or (animationIndex >= 54 and animationIndex <= 57) or (animationIndex >= 59 and animationIndex <= 62)):
-								with pixelLock: pixels[pixelIndex] = (0, 0, 255)
+								setColor(0, 0, 255, STATIC)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, STATIC)
 						pixelIndex += 1
 
 				# Increment animations and loop
@@ -219,54 +246,54 @@ def control():
 						# Fill each segment
 						if (currSegment == 0):
 							if (animationIndex == 5 or (animationIndex >= 7 and animationIndex <= 12) or animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or (animationIndex >= 29 and animationIndex <= 31) or animationIndex == 42 or (animationIndex >= 44 and animationIndex <= 49) or animationIndex == 59 or animationIndex == 61 or animationIndex == 63 or (animationIndex >= 65 and animationIndex <= 68)):						
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 1):
 							if (animationIndex == 3 or animationIndex == 5 or animationIndex == 7 or (animationIndex >= 9 and animationIndex <= 11) or (animationIndex >= 22 and animationIndex <= 29) or animationIndex == 40 or animationIndex == 42 or animationIndex == 44 or (animationIndex >= 46 and animationIndex <= 48) or animationIndex == 58 or animationIndex == 60 or animationIndex == 62 or (animationIndex >= 64 and animationIndex <=66)):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 2):
 							if (animationIndex == 5 or animationIndex == 7 or animationIndex == 9 or (animationIndex >= 11 and animationIndex <= 13) or animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or (animationIndex >= 29 and animationIndex <= 31) or animationIndex == 42 or animationIndex == 44 or animationIndex == 46 or (animationIndex >= 48 and animationIndex <= 50) or animationIndex == 60 or (animationIndex >= 62 and animationIndex <= 68)):
-								with pixelLock: pixels[pixelIndex] = (255, 255, 255)
+								setColor(255, 255, 255, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 3):
 							if (animationIndex == 5 or animationIndex == 7 or animationIndex == 9 or animationIndex == 11 or animationIndex == 12 or animationIndex == 23 or animationIndex == 25 or animationIndex == 27 or (animationIndex >=29 and animationIndex <= 31) or animationIndex == 42 or animationIndex == 44 or animationIndex == 46 or animationIndex == 48 or animationIndex == 49 or animationIndex == 59 or animationIndex == 61 or animationIndex == 63 or (animationIndex >= 65 and animationIndex <= 68)):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 4):
 							if (animationIndex == 0 or animationIndex == 2 or animationIndex == 4 or (animationIndex >= 6 and animationIndex <= 8) or animationIndex == 18 or animationIndex == 20 or animationIndex == 22 or (animationIndex >= 24 and animationIndex <= 27) or animationIndex == 37 or animationIndex == 39 or animationIndex == 41 or (animationIndex >= 43 and animationIndex <= 45) or (animationIndex >= 55 and animationIndex <= 58) or (animationIndex >= 60 and animationIndex <= 63)):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 5):
 							if ((animationIndex >= 9 and animationIndex <= 12) or (animationIndex >= 14 and animationIndex <= 17) or animationIndex == 27 or animationIndex == 29 or animationIndex == 31 or (animationIndex >= 33 and animationIndex <= 35) or animationIndex == 45 or animationIndex == 47 or animationIndex == 49 or (animationIndex >= 51 and animationIndex <= 54) or animationIndex == 64 or animationIndex == 66 or animationIndex == 68 or (animationIndex >= 70 and animationIndex <= 72)):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 6):
 							if (animationIndex == 0 or animationIndex == 2 or animationIndex == 3 or animationIndex == 13 or animationIndex == 15 or animationIndex == 17 or (animationIndex >= 19 and animationIndex <= 22) or animationIndex == 32 or animationIndex == 34 or animationIndex == 36  or animationIndex == 38 or animationIndex == 39 or animationIndex == 50 or animationIndex == 52 or animationIndex == 53 or animationIndex == 54 or (animationIndex >= 56 and animationIndex <= 58) or animationIndex == 69 or animationIndex == 71):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 7):
 							if (animationIndex == 0 or (animationIndex >= 2 and animationIndex <= 4) or animationIndex == 14 or (animationIndex >= 16 and animationIndex <= 22) or animationIndex == 32 or animationIndex == 34 or animationIndex == 36 or (animationIndex >= 38 and animationIndex <= 40) or animationIndex == 50 or animationIndex == 52 or animationIndex == 54 or (animationIndex >= 56 and animationIndex <=58) or animationIndex == 69 or animationIndex == 71):
-								with pixelLock: pixels[pixelIndex] = (255, 255, 255)
+								setColor(255, 255, 255, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 8):
 							if ((animationIndex >=0 and animationIndex <= 2) or animationIndex == 12 or animationIndex == 14 or animationIndex == 16 or (animationIndex >= 18 and animationIndex <= 20) or animationIndex == 30 or animationIndex == 32 or animationIndex == 34 or (animationIndex >= 36 and animationIndex <= 38) or (animationIndex >= 49 and animationIndex <= 56) or animationIndex == 67 or animationIndex == 69 or animationIndex == 71):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						elif (currSegment == 9):
 							if ((animationIndex >= 0 and animationIndex <= 3) or animationIndex == 13 or animationIndex == 15 or animationIndex == 17 or (animationIndex >= 19 and animationIndex <= 22) or animationIndex == 32 or (animationIndex >= 34 and animationIndex <= 39) or animationIndex == 50 or animationIndex == 52 or animationIndex == 54 or (animationIndex >= 56 and animationIndex <= 58) or animationIndex == 69 or animationIndex == 71 or animationIndex == 72):
-								with pixelLock: pixels[pixelIndex] = (255, 0, 0)
+								setColor(255, 0, 0, pixelIndex)
 							else:
-								with pixelLock: pixels[pixelIndex] = (0, 0, 0)
+								setColor(0, 0, 0, pixelIndex)
 						pixelIndex += 1
 
 				# Increment animations and loop
