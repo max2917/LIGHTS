@@ -316,6 +316,7 @@ t.start()
 
 while True:
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+		s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 		s.bind(("", 10250))
 		print("Start listen")
 		s.listen() # Wait for signal on port
@@ -338,10 +339,3 @@ while True:
 					param2 = int(float(d[2]))
 					param3 = int(float(d[3]))
 					print("***** ", state, " * ", param1, param2, param3, " *****")
-
-#					elif (threading.activeCount() > 1 and d[0] != "speed"):
-#						 Else, switching mode, stop any threads
-#						print("ACTIVE THREADS")
-#						threads = threading.enumerate()	# Get list of active threads
-#						for t in threads:
-#							t.join()

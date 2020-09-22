@@ -10,6 +10,7 @@ function request(param) {
     let window = document.getElementById("window").checked;
 
     param = param+"&desk="+desk+"&doctorWho="+doctorWho+"&pc="+pc+"&window="+window;
+    console.log("javascript: ", param);
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "handler.php?"+param, true);

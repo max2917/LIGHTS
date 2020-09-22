@@ -4,18 +4,18 @@ if (isset($_GET['mode']) and isset($_GET['red']) and isset($_GET['green']) and i
 	send_color($_GET['mode'], $_GET['red'], $_GET['green'], $_GET['blue'], $_GET['desk'], $_GET['doctorWho'], $_GET['pc'], $_GET['window']);
 }
 else {
-	send_color("error", 0, 1, 0);
+	send_color("error", 0, 1, 0, "true", "false", "false", "false");
 	echo("PHP socket error\n");
 }
 
 function send_color($mode, $red, $green, $blue, $desk, $doctorWho, $pc, $window) {
 	// UPDATE THESE IPS IF THE SERVERS MOVED OR CHANGED
-	if ($desk)		{ send_packet($mode, $red, $green, $blue, "192.168.1.140"); }
-	if ($doctorWho)	{ send_packet($mode, $red, $green, $blue, "192.168.1.141"); }
+	if ($desk == "true")		{ send_packet($mode, $red, $green, $blue, "192.168.1.140"); }
+	if ($doctorWho == "true")	{ send_packet($mode, $red, $green, $blue, "192.168.1.141"); }
 }
 
 function send_packet($mode, $red, $green, $blue, $address) {
-	$server = $address;
+	$server = "$address";
 	$fp = fsockopen($server, 10250, $errno, $errstr, 30);
 
 	if (!$fp) { echo"$errstr ($errno)<br />\n"; }
