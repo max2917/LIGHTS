@@ -2,6 +2,15 @@
 // Send XMLHttpRequest to update light strip via php
 // Input: param in format "mode=someMode&red=int&green=int&blue=int"
 function request(param) {
+
+    // Append to param which devices
+    let desk = document.getElementById("desk").checked;
+    let doctorWho = document.getElementById("doctorWho").checked;
+    let pc = document.getElementById("pc").checked;
+    let window = document.getElementById("window").checked;
+
+    param = param+"&desk="+desk+"&doctorWho="+doctorWho+"&pc="+pc+"&window="+window;
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "handler.php?"+param, true);
 	xhr.send();
