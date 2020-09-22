@@ -7,7 +7,7 @@ import colorsys
 import sched
 from queue import Queue
 
-pixelCount = 82
+pixelCount = 83
 pixels = neopixel.NeoPixel(board.D18, pixelCount, auto_write = False)
 animate = False
 animationSpeed = 25
@@ -125,17 +125,17 @@ def control():
 					stripSize += 1
 				for j in range(0, int(stripSize)):
 					if (currSegment == 0):
-						setColor(255, 0, 0, pixelIndex)
+						setColor(229, 0, 0, pixelIndex)
 					elif (currSegment == 1):
-						setColor(255, 25, 0, pixelIndex)
+						setColor(255, 141, 0, pixelIndex)
 					elif (currSegment == 2):
-						setColor(255, 175, 0, pixelIndex)
+						setColor(255, 238, 0, pixelIndex)
 					elif (currSegment == 3):
-						setColor(0, 255, 0, pixelIndex)
+						setColor(0, 129, 33, pixelIndex)
 					elif (currSegment == 4):
-						setColor(0, 77, 255, pixelIndex)
+						setColor(0, 76, 255, pixelIndex)
 					elif (currSegment == 5):
-						setColor(117, 7, 135, pixelIndex)
+						setColor(118, 1, 136, pixelIndex)
 					pixelIndex += 1
 			pixels.show()
 
