@@ -79,6 +79,11 @@ body {
 	flex-direction:		row;
 	justify-content:	space-evenly;
 }
+.devicesContainerOuter {
+	margin-bottom:	var(--vertMargin);
+	padding-left:	var(--sidePadd);
+	padding-right:	var(--sidePadd);
+}
 .animationButtonContainer {
 	margin-bottom:	var(--vertMargin);
 	padding-left:	var(--sidePadd);
@@ -378,3 +383,44 @@ button {
 	cursor: pointer;			/* Cursor on hover */
 }
 /* --- END SLIDER --- */
+
+/* --- Segmented Control --- */
+/* https://codepen.io/S-Maas/pen/NAYvdK/?editors=1100 */
+.devicesContainer {
+	margin:			50;
+	width:			100%/4;	/* div by number of buttons */
+	display:		flex;
+	max-width:		100%;
+	padding-left:	var(--sidePadd);
+	padding-right:	var(--sidePadd);
+	position:		relative;
+	/*user-select:	none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	position:		relative;
+	z-index:		1;*/
+
+	/* Border and font color */
+	font-size:		12px;
+	border:			1px solid var(--offWhite);
+	border-radius:	var(--cornerRadius);
+	color:			var(--offWhite);
+}
+.deviceButton {
+	/* Hide default radio buttons */
+	display:	none;
+}
+.deviceButtonLabel {
+	flex:			1;
+	text-align:		center;
+	white-space:	nowrap;
+	overflow:		hidden;
+	text-overflow:	ellipsis;
+	cursor:			pointer;
+	/*font-family:	var(--font);*/
+	font-size:		var(--fontSize);
+}
+.deviceButton:checked + .deviceButtonLabel {
+	background:	var(--offWhite);
+	color:		var(--offBlack);
+}
+/* --- END Segmented Control --- */
