@@ -27,7 +27,13 @@ function static(r, g, b) {
         t.classList.add("hide");
     }
 	
-	// Dynamically update the state of the sliders before sending
+	updateSlider(r, g, b)
+    
+    // Send request
+	request("mode=static"+"&red="+r+"&green="+g+"&blue="+b);
+};
+function updateSlider(r, g, b) {
+    // Dynamically update the state of the sliders before sending
 	let hSlider	= document.getElementById("hSlide");    // Get sliders
 	let sSlider	= document.getElementById("sSlide");
 	let vSlider	= document.getElementById("vSlide");
@@ -50,10 +56,7 @@ function static(r, g, b) {
     hSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
     sSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
     vSlider.style.boxShadow  = `inset 0 150px 0 0 rgba(255, 255, 255, ${(1-(lightness/100))}), inset 0 150px 0 0 rgba(0, 0, 0, ${(1-(brightness/100))})`;
-    
-    // Send request
-	request("mode=static"+"&red="+r+"&green="+g+"&blue="+b);
-};
+}
 
 // Set light strip to some animated mode
 function animate(mode) {
@@ -75,11 +78,173 @@ function animate(mode) {
 	
 };
 
+gradientLeftState = false;
+gradientRightState = false;
+gradientBarState = true;
+gradientLeftColor = { r: 0, g: 0, b: 255 };
+gradientRightColor = { r: 255, g: 0, b: 255 };
+
+// Set light strip to some gradient animation mode
+function sendGradient() {
+    requestString = "mode=gradient"+"&red="+gradientLeftColor.r+"/"+gradientLeftColor.g+"/"+gradientLeftColor.b+"&green="+gradientRightColor.r+"/"+gradientRightColor.g+"/"+gradientRightColor.b+"&blue="
+    if (gradientBarState) { requestString += "1" }
+    else { requestString += "0"}
+    console.log(requestString);
+    request(requestString);
+}
+function gradientBAR() {
+    let BAR = document.getElementById("gradientBAR");
+    let BARPREVIEW = document.getElementById("gradientPREVIEW");
+    if (gradientBarState == true) {
+        BAR.style.background = `#000`;
+        BAR.style.color = `rgb(250, 250, 250)`;
+        gradientBarState = false;
+        updateGradientPreview();
+    }
+    else {
+        BAR.style.background = `rgb(250, 250, 250)`;
+        BAR.style.color = `#111111`;
+        gradientBarState = true;
+        updateGradientPreview();
+    }
+}
+function gradientLEFTclicked(rgb) {
+    if (typeof rgb !== 'undefined') { gradientLeftColor = rgb; }
+    let LEFT = document.getElementById("gradientLEFT");
+    if (gradientLeftState == false) {
+        LEFT.style.boxShadow = `0px 0px 20px rgb(0, 255, 255)`;
+        gradientLeftState = true;
+    }
+    else {
+        LEFT.style.boxShadow = `0px 0px 0px rgba(0, 0, 0, 0)`;
+        gradientLeftState = false;
+    }
+
+    // Update button color
+    LEFT.style.background = `
+        linear-gradient(
+            to bottom,
+            rgb(250, 250, 250),
+            rgb(250, 250, 250) 90%,
+            rgba(0, 0, 0, 0) 90%
+        ),
+        linear-gradient(
+            to right,
+            rgb(${gradientLeftColor.r}, ${gradientLeftColor.g}, ${gradientLeftColor.b}),
+            rgb(${gradientLeftColor.r}, ${gradientLeftColor.g}, ${gradientLeftColor.b}) 100%
+        )
+    `;
+}
+function gradientRIGHTclicked(rgb) {
+    if (typeof rgb !== 'undefined') { gradientRightColor = rgb; }
+    let RIGHT = document.getElementById("gradientRIGHT");
+    if (gradientRightState == false) {
+        RIGHT.style.boxShadow = `0px 0px 20px rgb(0, 255, 255)`;
+        gradientRightState = true;
+    }
+    else {
+        RIGHT.style.boxShadow = `0px 0px 0px rgba(0, 0, 0, 0)`;
+        gradientRightState = false;
+    }
+
+    // Update button color
+    RIGHT.style.background = `
+        linear-gradient(
+            to bottom,
+            rgb(250, 250, 250),
+            rgb(250, 250, 250) 90%,
+            rgba(0, 0, 0, 0) 90%
+        ),
+        linear-gradient(
+            to right,
+            rgb(${parseInt(gradientRightColor.r, 10)}, ${parseInt(gradientRightColor.g, 10)}, ${parseInt(gradientRightColor.b, 19)}),
+            rgb(${parseInt(gradientRightColor.r, 10)}, ${parseInt(gradientRightColor.g, 10)}, ${parseInt(gradientRightColor.b, 19)}) 100%
+        )
+    `;
+}
+function updateLEFTbutton(rgb) {
+    let LEFT = document.getElementById("gradientLEFT");
+    if (typeof rgb !== 'undefined') { gradientLeftColor = rgb; }
+    // Update button color
+    LEFT.style.background = `
+        linear-gradient(
+            to bottom,
+            rgb(250, 250, 250),
+            rgb(250, 250, 250) 90%,
+            rgba(0, 0, 0, 0) 90%
+        ),
+        linear-gradient(
+            to right,
+            rgb(${parseInt(gradientLeftColor.r, 10)}, ${parseInt(gradientLeftColor.g, 10)}, ${parseInt(gradientLeftColor.b, 19)}),
+            rgb(${parseInt(gradientLeftColor.r, 10)}, ${parseInt(gradientLeftColor.g, 10)}, ${parseInt(gradientLeftColor.b, 19)}) 100%
+        )
+    `;
+    updateSlider(rgb.r, rgb.g, rgb.b);
+    updateGradientPreview();
+}
+function updateRIGHTbutton(rgb) {
+    let RIGHT = document.getElementById("gradientRIGHT");
+    if (typeof rgb !== 'undefined') { gradientRightColor = rgb; }
+    // Update button color
+    RIGHT.style.background = `
+        linear-gradient(
+            to bottom,
+            rgb(250, 250, 250),
+            rgb(250, 250, 250) 90%,
+            rgba(0, 0, 0, 0) 90%
+        ),
+        linear-gradient(
+            to right,
+            rgb(${parseInt(gradientRightColor.r, 10)}, ${parseInt(gradientRightColor.g, 10)}, ${parseInt(gradientRightColor.b, 19)}),
+            rgb(${parseInt(gradientRightColor.r, 10)}, ${parseInt(gradientRightColor.g, 10)}, ${parseInt(gradientRightColor.b, 19)}) 100%
+        )
+    `;
+    updateSlider(rgb.r, rgb.g, rgb.b);
+    updateGradientPreview();
+}
+function updateGradientPreview() {
+    let PREVIEW = document.getElementById("gradientPREVIEW");
+    if (gradientBarState == true) {
+        PREVIEW.style.background = `
+            linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0) 33.3%,
+                rgba(255, 255, 255, 1) 33.3%,
+                rgba(255, 255, 255, 1) 66.6%,
+                rgba(0, 0, 0, 0) 66.6%
+            ),
+            linear-gradient(
+                to right,
+                rgb(${parseInt(gradientLeftColor.r, 10)}, ${parseInt(gradientLeftColor.g, 10)}, ${parseInt(gradientLeftColor.b, 19)}),
+                rgb(${parseInt(gradientRightColor.r, 10)}, ${parseInt(gradientRightColor.g, 10)}, ${parseInt(gradientRightColor.b, 19)}) 100%
+            )
+        `;
+    }
+    else {
+        PREVIEW.style.background = `
+            linear-gradient(
+                to right,
+                rgb(${parseInt(gradientLeftColor.r, 10)}, ${parseInt(gradientLeftColor.g, 10)}, ${parseInt(gradientLeftColor.b, 19)}),
+                rgb(${parseInt(gradientRightColor.r, 10)}, ${parseInt(gradientRightColor.g, 10)}, ${parseInt(gradientRightColor.b, 19)}) 100%
+            )
+        `;
+    }
+    sendGradient();
+}
+
 // Update light strip based on slider states
 function sliderUpdate(h, s, v) {
-	// Convert HSV input to RGB then call static to set color
+    // Convert HSV input to RGB then call static to set color
+    //  unless sliders are being used to set gradients
 	let rgb = HSVtoRGB(h, (s/100), (v/100));
-	static(rgb.r, rgb.g, rgb.b);
+    if (gradientLeftState == false && gradientRightState == false) {
+        static(rgb.r, rgb.g, rgb.b);
+    }
+    else {
+        if (gradientLeftState == true) { updateLEFTbutton(rgb); }
+        if (gradientRightState == true) { updateRIGHTbutton(rgb); }
+        //sendGradient();
+    }
 };
 
 // Convert HSV inputs to RGB
