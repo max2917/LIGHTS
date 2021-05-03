@@ -305,61 +305,6 @@ def control():
 				pixels.show()
 				time.sleep(0.03)
 
-		# Generate a two tone gradient with optional center light
-		# animate gradiant to "ebb and flow" or something
-		elif (state == "gradient"):
-			# STATE:	"gradient"
-			# PARAM1:	Color A
-			# PARAM2:	Color B
-			# PARAM3:	Center light 0=off, 1=on
-
-			# Process input into int arrays
-			leftSTR = param1.split("/")
-			rightSTR = param2.split("/")
-			left = [0, 0, 0]
-			right = [0, 0, 0]
-
-			# Force input to be integer
-			for i in range(0, 3):
-				left[i] = int(float(leftSTR[i]))
-				right[i] = int(float(rightSTR[i]))
-
-			print("----- INPUT: ", left, right, "-----")
-
-			# Temporary implementation that draws segments
-			# !! This still doesn't work due to a problem of variable shairing
-			#    in the multithreaded process
-			for i in range (0, int(pixelCount/2)):
-				setColor(left[0], left[1], left[2], STATIC)
-			for i in range (int(pixelCount/2), pixelCount):
-				setColor(right[0], right[1], right[2], STATIC)
-
-
-			#rDelta = right[0]-left[0]
-			#gDelta = right[1]-left[1]
-			#bDelta = right[2]-left[2]
-
-			# Set first/last pixel
-			#setColor(left[0], left[1], left[2], i)
-			#setColor(right[0], right[1], right[2], pixelCount-1)
-
-			# Fill the rest
-			#for i in range(1, pixelCount-1):
-			#	left[0] = int(left[0] + (rDelta/pixelCount))
-			#	left[1] = int(left[1] + (gDelta/pixelCount))
-			#	left[2] = int(left[2] + (bDelta/pixelCount))
-			#	print(left, i)
-			#	setColor(left[0], left[1], left[2], i)
-
-			# Displaly white bar
-			#if (int(param3) == 1):
-			#	for i in range(int(pixelCount/3), int((pixelCount/3)*2)):
-			#		setColor(255, 255, 255, i)
-
-			pixels.show()
-			#time.sleep(1)
-				
-
 def threader():
 	control()		# Launching thread
 	q.task_done()	# Exiting program
@@ -392,12 +337,7 @@ while True:
 					# Handle parameters differently based on d[0] type
 					if (d[0] != "speed"):
 						state = d[0]
-					if (d[0] == "gradient"):
-						param1 = d[1]
-						param2 = d[2]
-						param3 = int(float(d[3]))
-					if (d[0] != "gradient"):
-						param1 = int(float(d[1]))
-						param2 = int(float(d[2]))
-						param3 = int(float(d[3]))
+					param1 = int(float(d[1]))
+					param2 = int(float(d[2]))
+					param3 = int(float(d[3]))
 					print("***** ", state, " * ", param1, param2, param3, " *****")

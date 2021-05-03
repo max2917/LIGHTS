@@ -73,29 +73,6 @@
 			<input type="range" min="0" max="100" class="sliderSV sliderS" id="sSlide" value=100>
 			<input type="range" min="0" max="100" class="sliderSV sliderV" id="vSlide" value=100>
 		</div>
-
-		<section class="sectionContainer">
-			<div class="gap"></div>
-			<div class="sectionLine sectionLineL"></div>
-			<div class="sectionTitle">Gradient Builder</div>
-			<div class="sectionLine sectionLineR"></div>
-			<div class="gap"></div>
-		</section>
-
-		<section class="gradientContainer">
-			<div class="gradientButtonRow">
-				<button type="button" class="gradientLEFTButton" id="gradientLEFT" onclick="javascript:gradientLEFThtml()">LEFT</button>
-				<div class="gap"></div>
-				<button type="button" class="gradientRIGHTButton" id="gradientRIGHT" onclick="jav4ascript:gradientRIGHThtml()">RIGHT</button>
-				<div class="gap"></div>
-				<button type="button" class="gradientButton" style="flex-grow: 2;" id="gradientBAR" onclick="javascript:gradientBARhtml()">Bar</button>
-			</div>
-			<div class="gradientPreviewRow">
-				<div class="gradientPreview" id="gradientPREVIEW"></div>
-				<div class="gap"></div>
-				<button type="button" class="gradientButton gradientSETButton" onclick="javascript:gradientSEThtml()">Set</button>
-			</div>
-		</section>
 		
 		<section class="sectionContainer">
 			<div class="gap"></div>
@@ -187,16 +164,6 @@
 			// Forward animation speed adjustments
 			let animSlider = document.getElementById("animationSpeedSlider");
 			animSlider.oninput = function() { javascript:animateHTML(animSlider.value); }
-			
-			// Handle Gradient's SET button
-			// Get color LEFT
-			// Get color RIGHT
-			// get state BAR
-			
-			function gradientBARhtml() { gradientBAR(); }
-			function gradientLEFThtml() { gradientLEFTclicked(); }
-			function gradientRIGHThtml() { gradientRIGHTclicked(); }
-			function gradientSEThtml() { sendGradient(); }
 
 		</script>
 		
