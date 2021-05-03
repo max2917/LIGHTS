@@ -15,8 +15,8 @@ animationSpeed = 25
 pixelLock = threading.Lock()
 rainbowSched = sched.scheduler()
 
-state = "rainbowChase"
-param1 = 10
+state = "pride"	# Animation on launch
+param1 = 50
 param2 = 0
 param3 = 0
 STATIC = -1	# Used for mode setting in setColor
@@ -39,6 +39,9 @@ gamma8 = [
   177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 ]
 
+# Accepts red, gree, blue colors and an index
+# If the index is -1 the entire strip will be filled
+# Otherwise only the pixel at the index
 def setColor(r, g, b, i):
 	if (i == STATIC):
 		with pixelLock: pixels.fill((gamma8[r], gamma8[g], gamma8[b]))
@@ -95,7 +98,6 @@ def control():
 					if (state != "rainbowChase"): continue # Use continue, not break.
 					if ((i % speedScale) == 0):
 						if (i <= (pixelCount*speedScale)): rgb = colorsys.hsv_to_rgb((i+offset)/(pixelCount*speedScale), 1, 1)
-						#with pixelLock: pixels[int(i/speedScale)] = (int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]))
 						setColor(int(255*rgb[0]), int(255*rgb[1]), int(255*rgb[2]), int(i/speedScale))
 				pixels.show()
 				if (offset < (pixelCount*speedScale)): offset += 1
@@ -127,15 +129,15 @@ def control():
 					if (currSegment == 0):
 						setColor(229, 0, 0, pixelIndex)
 					elif (currSegment == 1):
-						setColor(255, 141, 0, pixelIndex)
+						setColor(255, 127, 0, pixelIndex)
 					elif (currSegment == 2):
-						setColor(255, 238, 0, pixelIndex)
+						setColor(255, 200, 0, pixelIndex)
 					elif (currSegment == 3):
-						setColor(0, 129, 33, pixelIndex)
+						setColor(0, 200, 33, pixelIndex)
 					elif (currSegment == 4):
 						setColor(0, 76, 255, pixelIndex)
 					elif (currSegment == 5):
-						setColor(118, 1, 136, pixelIndex)
+						setColor(177, 2, 204, pixelIndex)
 					pixelIndex += 1
 			pixels.show()
 
@@ -311,40 +313,51 @@ def control():
 			# PARAM2:	Color B
 			# PARAM3:	Center light 0=off, 1=on
 
-			# Convert the RGB to HSV, slide between the HSV values, convert back to setColor
-
-			## CURRENTLY IMPLEMENTED STATICALLY
-
 			# Process input into int arrays
 			leftSTR = param1.split("/")
 			rightSTR = param2.split("/")
 			left = [0, 0, 0]
 			right = [0, 0, 0]
+
+			# Force input to be integer
 			for i in range(0, 3):
 				left[i] = int(float(leftSTR[i]))
 				right[i] = int(float(rightSTR[i]))
 
-			print("INPUT: ", left, right)
+			print("----- INPUT: ", left, right, "-----")
 
-			rDelta = right[0]-left[0]
-			gDelta = right[1]-left[1]
-			bDelta = right[2]-left[2]
+			# Temporary implementation that draws segments
+			# !! This still doesn't work due to a problem of variable shairing
+			#    in the multithreaded process
+			for i in range (0, int(pixelCount/2)):
+				setColor(left[0], left[1], left[2], STATIC)
+			for i in range (int(pixelCount/2), pixelCount):
+				setColor(right[0], right[1], right[2], STATIC)
 
-			#setColor(left[0], left[1], left[2], 0)
-			for i in range(0, pixelCount):
-				print(i)
-				left[0] = int(left[0] + (rDelta/pixelCount))
-				left[1] = int(left[1] + (gDelta/pixelCount))
-				left[2] = int(left[2] + (bDelta/pixelCount))
-				print(left)
-				setColor(left[0], left[1], left[2], i)
 
-			if (int(param3) == 1):
-				for i in range(int(pixelCount/3), int((pixelCount/3)*2)):
-					setColor(255, 255, 255, i)
+			#rDelta = right[0]-left[0]
+			#gDelta = right[1]-left[1]
+			#bDelta = right[2]-left[2]
+
+			# Set first/last pixel
+			#setColor(left[0], left[1], left[2], i)
+			#setColor(right[0], right[1], right[2], pixelCount-1)
+
+			# Fill the rest
+			#for i in range(1, pixelCount-1):
+			#	left[0] = int(left[0] + (rDelta/pixelCount))
+			#	left[1] = int(left[1] + (gDelta/pixelCount))
+			#	left[2] = int(left[2] + (bDelta/pixelCount))
+			#	print(left, i)
+			#	setColor(left[0], left[1], left[2], i)
+
+			# Displaly white bar
+			#if (int(param3) == 1):
+			#	for i in range(int(pixelCount/3), int((pixelCount/3)*2)):
+			#		setColor(255, 255, 255, i)
 
 			pixels.show()
-			time.sleep(1)
+			#time.sleep(1)
 				
 
 def threader():

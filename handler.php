@@ -11,7 +11,8 @@ else {
 function send_color($mode, $red, $green, $blue, $desk, $doctorWho, $pc, $window) {
 	// UPDATE THESE IPS IF THE SERVERS MOVED OR CHANGED
 	if ($desk == "true")		{ send_packet($mode, $red, $green, $blue, "192.168.1.140"); }
-	if ($doctorWho == "true")	{ send_packet($mode, $red, $green, $blue, "192.168.1.141"); }
+	if ($window == "true")		{ send_packet($mode, $red, $green, $blue, "192.168.1.141"); }
+	if ($doctorWho == "true")	{ send_packet($mode, $red, $green, $blue, "192.168.1.142"); }
 }
 
 function send_packet($mode, $red, $green, $blue, $address) {
