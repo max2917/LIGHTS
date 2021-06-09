@@ -15,7 +15,7 @@ animationSpeed = 25
 pixelLock = threading.Lock()
 rainbowSched = sched.scheduler()
 
-state = "runway"	# Animation on launch
+state = "pride"	# Animation on launch
 param1 = 50
 param2 = 0
 param3 = 0
