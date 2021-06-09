@@ -30,7 +30,7 @@ function static(r, g, b) {
 	updateSlider(r, g, b)
     
     // Send request
-	request("mode=static"+"&red="+r+"&green="+g+"&blue="+b);
+	request("mode=static"+"&red="+Math.trunc(r)+"&green="+Math.trunc(g)+"&blue="+Math.trunc(b));
 };
 function updateSlider(r, g, b) {
     // Dynamically update the state of the sliders before sending
@@ -69,7 +69,7 @@ function animate(mode) {
 
     if (isNaN(mode)) {
         // Send request with empty values for green, and blue with speed value in red
-        request("mode="+mode+"&red="+speedSlider.value+"&green=0&blue=0");
+        request("mode="+mode+"&red="+Math.trunc(speedSlider.value)+"&green=0&blue=0");
     } else {
         request("mode=speed"+"&red="+mode+"&green=0&blue=0");
     }
@@ -83,14 +83,7 @@ function sliderUpdate(h, s, v) {
     // Convert HSV input to RGB then call static to set color
     //  unless sliders are being used to set gradients
 	let rgb = HSVtoRGB(h, (s/100), (v/100));
-    if (gradientLeftState == false && gradientRightState == false) {
-        static(rgb.r, rgb.g, rgb.b);
-    }
-    else {
-        if (gradientLeftState == true) { updateLEFTbutton(rgb); }
-        if (gradientRightState == true) { updateRIGHTbutton(rgb); }
-        //sendGradient();
-    }
+    static(rgb.r, rgb.g, rgb.b);
 };
 
 // Convert HSV inputs to RGB

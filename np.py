@@ -15,7 +15,7 @@ animationSpeed = 25
 pixelLock = threading.Lock()
 rainbowSched = sched.scheduler()
 
-state = "pride"	# Animation on launch
+state = "runway"	# Animation on launch
 param1 = 50
 param2 = 0
 param3 = 0
@@ -64,14 +64,28 @@ def control():
 				setColor(param1, param2, param3, STATIC)
 				prevStatic = (param1, param2, param3)
 				pixels.show()
+		
+		# A runway style chasing light
+		elif (state == "runway"):
+			current = 1
+			while (state == "runway"):
+				setColor(64, 51, 4, STATIC)
+				setColor(255, 191, 17, current-1)
+				setColor(255, 191, 17, current)
+				setColor(255, 191, 17, current+1)
+				current += 1
+				if (current >= pixelCount - 1):
+					current = 1
+					time.sleep(0.5)
+				pixels.show()
 
 		# Quick flashing white
-		elif (state == "strobe"):
-			setColor(0, 0, 0, STATIC)
-			pixels.show()
-			time.sleep(0.1)
-			setColor(255, 255, 255, STATIC)
-			pixels.show()
+		#elif (state == "strobe"):
+		#	setColor(0, 0, 0, STATIC)
+		#	pixels.show()
+		#	time.sleep(0.1)
+		#	setColor(255, 255, 255, STATIC)
+		#	pixels.show()
 
 		# Animate entire strip through rainbow
 		elif (state == "rainbow"):
@@ -316,6 +330,7 @@ t.daemon = True
 t.start()
 
 while True:
+	# This is for receiving TCP, SOCK_STREAM would be SOCK_DGRAM if UDP
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 		s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 		s.bind(("", 10250))

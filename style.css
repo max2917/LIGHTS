@@ -183,7 +183,7 @@ button {
 			rgb(118, 1, 136) 83.34%
 		);
 }
-.buttonStrobe {
+.buttonRunway {
 	background:
 		linear-gradient(
 			to bottom,
@@ -193,8 +193,8 @@ button {
 		),
 		linear-gradient(
 			to right,
-			rgb(0, 0, 0) 50%,
-			rgb(200, 200, 255) 50%
+			rgb(68, 51, 4) 50%,
+			rgb(255, 191, 17) 50%
 		);
 }
 .buttonPolice {
