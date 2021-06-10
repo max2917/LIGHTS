@@ -7,7 +7,11 @@ import colorsys
 import sched
 from queue import Queue
 
-pixelCount = 83
+# DW = 10
+# WINDOW = 60
+# DESK = 74
+# PC = 36
+pixelCount = 74
 pixels = neopixel.NeoPixel(board.D18, pixelCount, auto_write = False)
 animate = False
 animationSpeed = 25
@@ -68,16 +72,20 @@ def control():
 		# A runway style chasing light
 		elif (state == "runway"):
 			current = 1
-			while (state == "runway"):
+			for i in range(1, pixelCount-1):
+				if (state != "runway"): break
 				setColor(64, 51, 4, STATIC)
 				setColor(255, 191, 17, current-1)
 				setColor(255, 191, 17, current)
 				setColor(255, 191, 17, current+1)
 				current += 1
-				if (current >= pixelCount - 1):
-					current = 1
-					time.sleep(0.5)
 				pixels.show()
+			setColor(64, 51, 4, STATIC)
+			pixels.show()
+			# Spin wait to facilitate inturruption instead of time.sleep
+			for i in range(0, 4000000):
+				if (state != "runway"): break
+
 
 		# Quick flashing white
 		#elif (state == "strobe"):
