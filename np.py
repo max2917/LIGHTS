@@ -25,6 +25,7 @@ param2 = 0
 param3 = 0
 STATIC = -1	# Used for mode setting in setColor
 
+# Gamma shift color correction to compensate for poor color accuracy of LEDs
 gamma8 = [
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,
@@ -163,7 +164,7 @@ def control():
 					pixelIndex += 1
 			pixels.show()
 
-		# Police car lighting effect
+		# Police car lighting effect ***TODO: this should be done as a lookup table reallly***
 		elif (state == "police"):
 			animationIndex = 0	# Animation counter
 
@@ -246,7 +247,7 @@ def control():
 				pixels.show()
 				time.sleep(0.03)
 
-		# Fire truck lighting effect
+		# Fire truck lighting effect ***TODO: this should be done as a lookup table reallly***
 		elif (state == "fire"):
 			animationIndex = 0	# Animation counter
 
